@@ -1,5 +1,7 @@
 package com.teamsexy.helloTabs;
 
+import com.teamsexy.helloTabs.R;
+
 import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
@@ -22,7 +24,7 @@ public class Felix extends TabActivity {
         intent = new Intent().setClass(this, EventsActivity.class);
 
         // Initialize a TabSpec for each tab and add it to the TabHost
-        spec = tabHost.newTabSpec("events").setIndicator("Now!",
+        spec = tabHost.newTabSpec("wtf").setIndicator("Now!",
                           res.getDrawable(R.drawable.tab_one))
                       .setContent(intent);
         tabHost.addTab(spec);
