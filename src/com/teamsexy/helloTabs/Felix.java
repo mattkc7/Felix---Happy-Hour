@@ -22,7 +22,7 @@ public class Felix extends TabActivity {
         intent = new Intent().setClass(this, EventsActivity.class);
 
         // Initialize a TabSpec for each tab and add it to the TabHost
-        spec = tabHost.newTabSpec("events").setIndicator("Events",
+        spec = tabHost.newTabSpec("events").setIndicator("Now!",
                           res.getDrawable(R.drawable.tab_one))
                       .setContent(intent);
         tabHost.addTab(spec);
