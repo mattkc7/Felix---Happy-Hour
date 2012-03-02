@@ -1,50 +1,64 @@
 package com.teamsexy.helloTabs;
 
 import android.app.Activity;
+import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Bundle;
 import android.widget.TextView;
 
 public class EventsActivity extends Activity implements LocationListener {
     
 	private LocationManager locationManager;
-	private LocationProvider locationProvider;
-	private TextView textview;
+	private String locationProvider;
+	private TextView notificationField;
 	
+	@SuppressWarnings("static-access")
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Initialize TextView
-        textview = new TextView(this);
-        textview.setText("This is the EVENTS tab");
-        setContentView(textview);
+        // Initialize Layout
+        notificationField = new TextView(this);
+        notificationField.setText("This is the EVENTS tab");
+        setContentView(notificationField);
         
-        // Initialize LocationManager
+        // Initialize LocationManager as GPS_PROVIDER for now
+        // In the long term, might want to look at other options to improve battery life
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationProvider = locationManager.GPS_PROVIDER;
+        Location location = locationManager.getLastKnownLocation(locationProvider);
         
+        // Set Location if it exists
+        if (location != null) {
+        	notificationField = new TextView(this);
+        	
+        	int latitude = (int) (location.getLatitude());
+			int longitude = (int) (location.getLongitude());
+			
+			notificationField.setText("New Location: " + latitude + ", " + longitude);
+			setContentView(notificationField);
+        }
     }
 	
 	/* Activity behavior on startup / pause */
 	protected void onResume() {
 		super.onResume();
-		// State-retrieving activity here
-		// Perhaps a feed and/or location update
+		locationManager.requestLocationUpdates(locationProvider, 400, 1, this);
 	}
 	
 	protected void onPause() {
 		super.onPause();
-		// State-saving activity here
+		locationManager.removeUpdates(this);
 	}
 
 	/* Location listening functionality */
 	public void onLocationChanged(Location location) {
+		notificationField = new TextView(this);
 		int latitude = (int) (location.getLatitude());
 		int longitude = (int) (location.getLongitude());
-		
-		textview.setText("New Location: " + latitude + ", " + longitude);
-		setContentView(textview);
+		notificationField.setText("New Location: " + latitude + ", " + longitude);
+		setContentView(notificationField);
 	}
 
 	// TODO: Provider disabled behavior
