@@ -1,6 +1,8 @@
 package com.teamsexy.helloTabs;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -31,6 +33,9 @@ public class FelixDbAdapter {
     				+ "latitude integer, longitude integer);";
 
     private static final String DATABASE_NAME = "felixdb";
+    private static final String FDB_SPOTS_TABLE = "spots";
+    private static final String FDB_EVENTS_TABLE = "events";
+    private static final String FDB_GROUPS_TABLE = "groups";
     private static final int DATABASE_VERSION = 2;
     private final Context context;
     
@@ -76,12 +81,16 @@ public class FelixDbAdapter {
     }
     
     /*** CRUD Functionality: Events ***/
-    
+    //public Cursor getAllEventEntries() {}
     
     /*** CRUD Functionality: Groups ***/
-    
+	//public Cursor getAllGroupEntries() {}
     
     /*** CRUD Functionality: Spots ***/
-    
+    public Cursor getAllSpotEntries() {
+    	return db.query(FDB_SPOTS_TABLE, 
+    			new String[] {"_id", "spot_name", "spot_about", "latitude", "longitude"},
+               null, null, null, null, null);
+    }
     
 }
