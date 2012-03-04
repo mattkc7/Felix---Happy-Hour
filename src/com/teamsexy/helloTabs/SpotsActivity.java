@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.SimpleCursorAdapter;
+import android.widget.ListView;
 
 public class SpotsActivity extends ListActivity {
 
@@ -33,6 +35,7 @@ public class SpotsActivity extends ListActivity {
     public void getAllSpotsData() {    	
     	Cursor spotsCursor = spotDbHelper.getAllSpotEntries();
     	List<String> spotNames = new ArrayList<String>();
+    	spotNames.add("Create a Spot");
     	
     	// If query returns spots, display them in Spots Tab
     	// Might want to add ordering query so that most recent
@@ -46,15 +49,17 @@ public class SpotsActivity extends ListActivity {
     		
     	}
     	
-    	//...otherwise if cursor is empty, display a "No Spots Found" message.
-    	// FIXME clicking on this should take one to the SpotsEdit activity
-    	else {
-    		spotNames.add("No spots found. Add one?");
-    	}
- 
     	// Close cursor
     	spotsCursor.close();
     	setListAdapter(new ArrayAdapter<String>(this, 
 				android.R.layout.simple_list_item_1, spotNames));
     }
+    
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        Intent i = new Intent(this, SpotEditActivity.class);
+        startActivity(i);
+    }
+    
+    
 }
