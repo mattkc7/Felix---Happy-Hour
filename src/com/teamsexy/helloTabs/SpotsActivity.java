@@ -38,6 +38,9 @@ public class SpotsActivity extends FragmentActivity {
         
         // Fetch spots data
         getAllSpotsData();
+        
+        // Display list view of spot data
+        setContentView(spotsview);
     }
     
     /**
