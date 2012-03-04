@@ -3,18 +3,21 @@ package com.teamsexy.helloTabs;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class SpotsActivity extends ListActivity {
+public class SpotsActivity extends FragmentActivity {
 
 	/* Spot database updates */
 	private FelixDbAdapter spotDbHelper;
+	private ListView spotsview;
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +25,16 @@ public class SpotsActivity extends ListActivity {
         // Initialize database helper
         spotDbHelper = new FelixDbAdapter(this);
         spotDbHelper.open();
+        
+        // Initialize View
+        spotsview = new ListView(this);
+        spotsview.setOnItemClickListener(new OnItemClickListener () 
+        {
+        	public void onItemClick(AdapterView<?> parent, View v, int position, long id)
+        	{
+        		launchSpotEditActivity ();
+        	}
+        });
         
         // Fetch spots data
         getAllSpotsData();
@@ -51,15 +64,16 @@ public class SpotsActivity extends ListActivity {
     	
     	// Close cursor
     	spotsCursor.close();
-    	setListAdapter(new ArrayAdapter<String>(this, 
+    	spotsview.setAdapter(new ArrayAdapter<String>(this, 
 				android.R.layout.simple_list_item_1, spotNames));
     }
     
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        Intent i = new Intent(this, SpotEditActivity.class);
-        startActivity(i);
+    /**
+     * launchSpotEditActivity
+     */
+    public void launchSpotEditActivity ()
+    {
+    	Intent i = new Intent(this, SpotEditActivity.class);
+		startActivity(i);
     }
-    
-    
 }
