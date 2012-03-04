@@ -1,7 +1,5 @@
 package com.teamsexy.helloTabs;
 
-import java.util.Date;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
