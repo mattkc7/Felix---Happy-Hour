@@ -22,7 +22,9 @@ public class SpotsActivity extends ListActivity {
         spotDbHelper = new FelixDbAdapter(this);
         spotDbHelper.open();
         
-        // Retrieve spots data and fill list view
+        // Fetch spots data
+        getAllSpotsData();
+        
         // Set list layout in Spots activity
         setListAdapter(new ArrayAdapter<String>(this,
         		android.R.layout.simple_list_item_1, spotNames));
