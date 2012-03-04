@@ -18,7 +18,7 @@ import android.util.Log;
  */
 public class FelixDbAdapter {
 	
-	private static final String TAG = "NotesDbAdapter";
+	private static final String TAG = "FelixDB";
 	private DatabaseHelper dbHelper;
     private SQLiteDatabase db;
     
