@@ -23,7 +23,6 @@ public class FelixDbAdapter {
 	private DatabaseHelper dbHelper;
     private SQLiteDatabase db;
     
-   
     /**
      * Database creation sql statement
      */
@@ -61,7 +60,9 @@ public class FelixDbAdapter {
 		public void onUpgrade(SQLiteDatabase dbh, int oldVersion, int newVersion) {
 			Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
                     + newVersion + ", which will destroy all old data");
-            dbh.execSQL("DROP TABLE IF EXISTS notes");
+            dbh.execSQL("DROP TABLE IF EXISTS spots");
+            dbh.execSQL("DROP TABLE IF EXISTS groups");
+            dbh.execSQL("DROP TABLE IF EXISTS events");
             onCreate(dbh);
 		}
     }
@@ -88,16 +89,24 @@ public class FelixDbAdapter {
     }
     
     /*** CRUD Functionality: Events ***/
-    //public Cursor getAllEventEntries() {}
+    public Cursor getAllEventEntries() {
+    	return db.query(FDB_EVENTS_TABLE, 
+    			new String[] {"_id", "event_name", "event_about", "date_time"},
+    			null, null, null, null, null);
+    }
     
     /*** CRUD Functionality: Groups ***/
-	//public Cursor getAllGroupEntries() {}
-    
+	public Cursor getAllGroupEntries() {
+		return db.query(FDB_GROUPS_TABLE, 
+    			new String[] {"_id", "group_name", "group_about"},
+    			null, null, null, null, null);
+	}
+   
     /*** CRUD Functionality: Spots ***/
     public Cursor getAllSpotEntries() {
     	return db.query(FDB_SPOTS_TABLE, 
     			new String[] {"_id", "spot_name", "spot_about", "latitude", "longitude"},
-               null, null, null, null, null);
+    			null, null, null, null, null);
     }
     
 }
