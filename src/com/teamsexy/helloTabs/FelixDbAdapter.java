@@ -1,6 +1,7 @@
 package com.teamsexy.helloTabs;
 
-import android.content.ContentValues;
+import java.util.Date;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -24,13 +25,21 @@ public class FelixDbAdapter {
 	private DatabaseHelper dbHelper;
     private SQLiteDatabase db;
     
+   
     /**
      * Database creation sql statement
      */
     private static final String DATABASE_CREATE =
     		"create table spots (_id integer primary key autoincrement, "
-    				+ "spot_name text not null, spot_about text not null, "
-    				+ "latitude integer, longitude integer);";
+    		+ "spot_name text not null, spot_about text, "
+    		+ "latitude integer, longitude integer);" + 
+    		
+    		"create table groups (_id integer primary key autoincrement, "
+    		+ "group_name text not null, group_about text);" + 
+    				
+    		"create table events (_id integer primary key autoincrement, "
+    		+ "event_name text not null, event_about text, "
+    		+ "date_time text not null);";
 
     private static final String DATABASE_NAME = "felixdb";
     private static final String FDB_SPOTS_TABLE = "spots";
