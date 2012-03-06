@@ -15,7 +15,7 @@ import android.util.Log;
  * functionality for spots, events, other user info.
  *
  * Inspired by Android Notepad Tutorial, whose source can be found here:
- * [Placeholder]
+ * http://developer.android.com/resources/tutorials/notepad/index.html
  */
 public class FelixDbAdapter {
 	
