@@ -19,8 +19,8 @@ public class GroupsActivity extends FragmentActivity {
 	private FelixDbAdapter groupDbHelper;
 	private ListView groupsview;
 
-	private static final String[] groupSamples={"Informatics Dept", "Jedi Knights", 
-		"Dumbledore's Army"};
+	//private static final String[] groupSamples={"Informatics Dept", "Jedi Knights", 
+		//"Dumbledore's Army"};
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +40,7 @@ public class GroupsActivity extends FragmentActivity {
         });
         
         // Fetch and display groups data
-        getAllGroups();
+        //getAllGroups();
         setContentView(groupsview);
     }
     
