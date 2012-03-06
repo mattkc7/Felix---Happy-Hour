@@ -76,7 +76,9 @@ public class SpotsActivity extends FragmentActivity {
      */
     public void launchSpotEditActivity ()
     {
-    	Intent i = new Intent(this, SpotEditActivity.class);
+    	Intent i = new Intent(this, EventEditActivity.class);
+
+//    	Intent i = new Intent(this, SpotEditActivity.class);
     	startActivity(i);
     }
 }

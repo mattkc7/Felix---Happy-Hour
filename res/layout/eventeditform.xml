@@ -15,6 +15,11 @@
 		android:layout_weight="1"
 		android:scrollbars="vertical" />
     
+	<Button android:id="@+id/locationEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location of Event Placeholder"/>
+    
     <TextView android:id="@+id/dateDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
