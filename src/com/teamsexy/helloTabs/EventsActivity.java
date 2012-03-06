@@ -14,10 +14,9 @@ public class EventsActivity extends FragmentActivity implements LocationListener
 	private String locationProvider;
 	private TextView notificationField;
 	
-	@SuppressWarnings("static-access")
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        
         // Initialize Layout
         notificationField = new TextView(this);
         notificationField.setText("This is the EVENTS tab");
