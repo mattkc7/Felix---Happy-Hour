@@ -19,8 +19,8 @@ public class GroupsActivity extends FragmentActivity {
 	private FelixDbAdapter groupDbHelper;
 	private ListView groupsview;
 
-	//private static final String[] groupSamples={"Informatics Dept", "Jedi Knights", 
-		//"Dumbledore's Army"};
+	private static final String[] groupSamples={"Informatics Dept", "Jedi Knights", 
+		"Dumbledore's Army"};
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +40,7 @@ public class GroupsActivity extends FragmentActivity {
         });
         
         // Fetch and display groups data
-        //getAllGroups();
+        getAllGroups();
         setContentView(groupsview);
     }
     
@@ -50,32 +50,18 @@ public class GroupsActivity extends FragmentActivity {
      * Retrieve data for all spots from db adapter with a cursor. 
      */
     public void getAllGroups() {    	
-    	Cursor groupsCursor = groupDbHelper.getAllGroupEntries();
+    	
     	List<String> groupNames = new ArrayList<String>();
     	groupNames.add("Create a Group");
     	
-    	// If query returns group, display them in Groups Tab
-    	// Might want to add ordering query so that most recent
-    	// spots display first...
-    	if (groupsCursor.getCount() > 0) {
-    		groupsCursor.moveToFirst();
-    		while (!groupsCursor.isAfterLast()) {
-    			groupNames.add(groupsCursor.getString(1));
-    			groupsCursor.moveToLast();
-    		}
-    		
+    	
+    	// Temporary - Add Sample Groups to List
+    	for (String groupname : groupSamples) {
+    		groupNames.add(groupname);
     	}
     	
-    	// Close cursor
-    	groupsCursor.close();
-    	
-    	// Temporary - Ad`d Sample Groups to List
-    	//for (String groupname : groupSamples) {
-    		//groupNames.add(groupname);
-    	//}
-    	
     	groupsview.setAdapter(new ArrayAdapter<String>(this, 
-				android.R.layout.simple_list_item_1, groupNames));
+    			android.R.layout.simple_list_item_1, groupNames));
     }
     
     /**
