@@ -13,7 +13,7 @@ public class EventEditActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        String[] placeholder = {"[Edit Event Title]", "[Edit Event About]", "[Event Location]", "[Event Date/Time]"};
+        String[] placeholder = {"[Edit Event Title]", "[Edit Event About]", "[Event Location]", "[Event Date/Time]", "[Button]"};
         setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, placeholder));
 	}
 }

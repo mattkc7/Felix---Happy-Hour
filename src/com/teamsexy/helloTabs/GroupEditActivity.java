@@ -13,7 +13,7 @@ public class GroupEditActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        String[] placeholder = {"[Group Name]", "[Group About]", "[Other TBD]"}; 
+        String[] placeholder = {"[Group Name]", "[Group About]", "[Other TBD]", "[Button Placeholder]"}; 
         setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, placeholder));
 	}
 
