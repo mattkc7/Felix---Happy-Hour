@@ -18,7 +18,7 @@ public class SpotEditActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.spoteditform);
         
-        final EditText edittext1 = (EditText) findViewById(R.id.spottitle);
+        final EditText edittext1 = (EditText) findViewById(R.id.spot_name);
         edittext1.setOnKeyListener(new OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // If the event is a key-down event on the "enter" button
@@ -32,7 +32,7 @@ public class SpotEditActivity extends Activity {
             }
         });
         
-        final EditText edittext2 = (EditText) findViewById(R.id.spotbody);
+        final EditText edittext2 = (EditText) findViewById(R.id.spot_about);
         edittext2.setOnKeyListener(new OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // If the event is a key-down event on the "enter" button

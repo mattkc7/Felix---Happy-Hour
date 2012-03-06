@@ -6,15 +6,20 @@
 	android:layout_height="fill_parent"  
 	android:drawSelectorOnTop="false" >
 	
-    <EditText android:id="@+id/spottitle" 
+    <EditText android:id="@+id/spot_name" 
 		  android:layout_width="match_parent"
 			android:layout_height="wrap_content" 
 			android:layout_weight="1"/>
   
-    <EditText android:id="@+id/spotbody" 
+    <EditText android:id="@+id/spot_about" 
         android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_weight="1"
 		android:scrollbars="vertical" />
+
+    <Button android:id="@+id/locationPlaceholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location Placeholder"/>
     
 </LinearLayout>

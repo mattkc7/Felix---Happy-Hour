@@ -4,5 +4,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
+    <EditText android:id="@+id/event_name" 
+		  android:layout_width="match_parent"
+			android:layout_height="wrap_content" 
+			android:layout_weight="1"/>
+  
+    <EditText android:id="@+id/event_about" 
+        android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:scrollbars="vertical" />
+    
+    <TextView android:id="@+id/dateDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""/>
+    <Button android:id="@+id/pickDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change the event date"/>
+    
+    <Button android:id="@+id/eventconfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm Event Placeholder"/>
 
 </LinearLayout>
