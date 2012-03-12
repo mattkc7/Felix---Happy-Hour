@@ -51,7 +51,7 @@ public class SpotsActivity extends FragmentActivity {
     public void getAllSpotsData() {    	
     	Cursor spotsCursor = spotDbHelper.getAllSpotEntries();
     	List<String> spotNames = new ArrayList<String>();
-    	spotNames.add("Create a Spot");
+    	//spotNames.add("Create a Spot");
     	
     	// If query returns spots, display them in Spots Tab
     	// Might want to add ordering query so that most recent
