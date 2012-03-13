@@ -73,7 +73,7 @@ public class SpotsActivity extends ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		Log.w("@@@@", "inflating menu");
-		new MenuInflater(this).inflate(R.menu.option, menu);
+		new MenuInflater(this).inflate(R.menu.spot_options, menu); //previously option
 		Log.w("@@@@", "menu inflated");
 		return (super.onCreateOptionsMenu(menu));
 	}

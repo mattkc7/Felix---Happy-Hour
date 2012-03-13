@@ -94,6 +94,7 @@
         </activity>
         
         <activity android:name=".DetailForm"></activity>
+        <activity android:name=".GroupDetailForm"></activity>
     </application>
 
 </manifest>
