@@ -31,7 +31,7 @@ public class GroupDetailForm extends Activity {
         Button save = (Button)findViewById(R.id.save);
         save.setOnClickListener(onSave);
         Button addFriends = (Button)findViewById(R.id.addFriends);
-        save.setOnClickListener(onAddFriends);
+        addFriends.setOnClickListener(onAddFriends);
         
         spotId = getIntent().getStringExtra(GroupsActivity.ID_EXTRA);
         
@@ -89,7 +89,8 @@ public class GroupDetailForm extends Activity {
 	private View.OnClickListener onAddFriends = new View.OnClickListener() {
 		public void onClick(View v) {
 			
-			startActivityForResult(new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI), 1);
+			startActivityForResult(new Intent(Intent.ACTION_PICK, 
+					ContactsContract.Contacts.CONTENT_URI), 1);
 		}
 	};
 	
