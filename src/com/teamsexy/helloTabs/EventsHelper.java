@@ -18,7 +18,8 @@ public class EventsHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		db.execSQL("CREATE TABLE events (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT);");
+		db.execSQL("CREATE TABLE events (_id INTEGER PRIMARY KEY AUTOINCREMENT, chosenSpot TEXT, chosenTime TEXT, " +
+				"chosenDate TEXT, chosenGroup TEXT);");
 		
 	}
 
@@ -31,24 +32,26 @@ public class EventsHelper extends SQLiteOpenHelper {
 
 	    // Fill Me In
 	    return(getReadableDatabase()
-	            .rawQuery("SELECT _id, name FROM events WHERE _ID=?", args));
+	            .rawQuery("SELECT _id, chosenSpot FROM events WHERE _ID=?", args));
 	}
 	
-	public void insert(String name) {
+	public void insert(String spot, String time, String date, String group) {
 		ContentValues cv=new ContentValues();
-		cv.put("name", name); 
-//		cv.put("address", address); 
-//		cv.put("type", type); 
+		cv.put("chosenSpot", spot); 
+		cv.put("chosenTime", time); 
+		cv.put("chosenDate", date); 
+		cv.put("chosenGroup", group); 
 		getWritableDatabase().insert("events", "name", cv); 
 	}
 	
-	public void update(String id, String name) {
+	public void update(String id, String spot, String time, String date, String group) {
 		ContentValues cv = new ContentValues();
 		String[] args = { id };
 
-		cv.put("name", name);
-//		cv.put("address", address);
-//		cv.put("type", type);
+		cv.put("chosenSpot", spot); 
+		cv.put("chosenTime", time); 
+		cv.put("chosenDate", date); 
+		cv.put("chosenGroup", group); 
 
 		getWritableDatabase().update("events", cv, "_ID=?", args);
 	}
@@ -57,7 +60,7 @@ public class EventsHelper extends SQLiteOpenHelper {
 		return(getReadableDatabase().rawQuery("SELECT _id, name FROM events ORDER BY name", null));
 	}
 	
-	public String getName(Cursor c) { 
+	public String getSpot(Cursor c) { 
 		return(c.getString(1));
 	}
 	

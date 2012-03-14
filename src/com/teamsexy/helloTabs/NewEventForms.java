@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 public class NewEventForms extends Activity { 
 	
-	String spotId = null;
+	String eventID = null;
 	EditText name=null;
 	
 	EventsHelper helper=null;
@@ -41,6 +41,9 @@ public class NewEventForms extends Activity {
 	int mHour;
 	int mMin;
 	
+	//variables to store the selected spot, time, date, and group
+	String selectedSpot, selectedTime, selectedDate, selectedGroup;
+	
 	static final int TIME_DIALOG_ID=1;
 	static final int DATE_DIALOG_ID=0;
 	
@@ -48,27 +51,31 @@ public class NewEventForms extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mc_event_detail_form);
 		
-		//the spinner to select your group(s). How can we select multple groups?
-				ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.list_of_groups, 
-																				android.R.layout.simple_spinner_item);
-				adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		//the spinner to select your group(s). How can we select multiple groups?
+		ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(
+				this, R.array.list_of_groups,
+				android.R.layout.simple_spinner_item);
+		adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-				Spinner s2 = (Spinner) findViewById(R.id.select_groups);
-				s2.setAdapter(adapter2);
-				s2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-					 
-					@Override
-					public void onItemSelected(AdapterView<?> adap, View v, int i, long lng) {
-						//do something here
-						Log.d("@..@@", adap.getItemAtPosition(i).toString());
-						Toast.makeText(adap.getContext(), adap.getItemAtPosition(i).toString(), Toast.LENGTH_SHORT).show();
-					}
-					 
-					@Override
-					public void onNothingSelected(AdapterView<?> arg0) {
-						//do something else
-					}
-				});
+		Spinner s2 = (Spinner) findViewById(R.id.select_groups);
+		s2.setAdapter(adapter2);
+		s2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> adap, View v, int i, long lng) {
+				// do something here
+				Log.d("@..@@", adap.getItemAtPosition(i).toString());
+				selectedGroup = adap.getItemAtPosition(i).toString();
+				Toast.makeText(adap.getContext(),
+						adap.getItemAtPosition(i).toString(),
+						Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// do something else
+			}
+		});
 		
 		
 		//spinner to select a SPOT
@@ -80,15 +87,19 @@ public class NewEventForms extends Activity {
 		s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 			 
 			@Override
-			public void onItemSelected(AdapterView<?> adap, View v, int i, long lng) {
-				//do something here
+			public void onItemSelected(AdapterView<?> adap, View v, int i,
+					long lng) {
+				// do something here
 				Log.d("@@@", adap.getItemAtPosition(i).toString());
-				Toast.makeText(adap.getContext(), adap.getItemAtPosition(i).toString(), Toast.LENGTH_SHORT).show();
+				selectedSpot = adap.getItemAtPosition(i).toString();
+				Toast.makeText(adap.getContext(),
+						adap.getItemAtPosition(i).toString(),
+						Toast.LENGTH_SHORT).show();
 			}
-			 
+
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
-				//do something else
+				// do something else
 			}
 		});
 		
@@ -123,12 +134,12 @@ public class NewEventForms extends Activity {
 		helper = new EventsHelper(this);
         
 
-        //Button save = (Button)findViewById(R.id.save);
-        //save.setOnClickListener(onSave);
+        Button save = (Button)findViewById(R.id.create_event);
+        save.setOnClickListener(onSave);
         
-        spotId = getIntent().getStringExtra(NewEventForms.ID_EXTRA);
+        eventID = getIntent().getStringExtra(NewEventForms.ID_EXTRA);
         
-        if (spotId != null){
+        if (eventID != null){
         	load();
         }
 	}
@@ -154,6 +165,7 @@ public class NewEventForms extends Activity {
 			
 			mPickDate.setText(new StringBuilder().append(mMonth+1).append("-").
 					append(mDay).append("-").append(mYear).append(" "));
+			selectedDate = (String) mPickDate.getText();
 		}
 	};
 	
@@ -173,6 +185,7 @@ public class NewEventForms extends Activity {
 			}
 			
 			mPickTime.setText(new StringBuilder().append(mHour).append(":").append(newMin).append(" "));
+			selectedTime = (String)mPickTime.getText();
 		}
 	};
 	
@@ -182,10 +195,10 @@ public class NewEventForms extends Activity {
 	}
 	
 	private void load() {
-	    Cursor c=helper.getById(spotId);
+	    Cursor c=helper.getById(eventID);
 
 	    c.moveToFirst();    
-	    name.setText(helper.getName(c));
+	    name.setText(helper.getSpot(c));
 //	    address.setText(helper.getAddress(c));
 //	    
 //	    if (helper.getType(c).equals("happy_hr")) {
@@ -201,21 +214,12 @@ public class NewEventForms extends Activity {
 	private View.OnClickListener onSave = new View.OnClickListener() {
 		public void onClick(View v) {
 
-//			String type = null;
-//
-//			switch (types.getCheckedRadioButtonId()) {
-//			case R.id.happy_hr:
-//				type ="happy_hr";
-//				break;
-//			case R.id.my_spot:
-//				type ="my_spot";
-//				break;
-//			}
 			
-			if (spotId == null){
-				helper.insert(name.getText().toString()); //, address.getText().toString(), type);
+			if (eventID == null){
+				//helper.insert(name.getText().toString()); //, address.getText().toString(), type);
+				helper.insert(selectedSpot, selectedTime, selectedDate, selectedGroup);
 			} else {
-				helper.update(spotId, name.getText().toString()); //, address.getText().toString(), type);
+				helper.update(eventID, selectedSpot, selectedTime, selectedDate, selectedGroup); //, address.getText().toString(), type);
 			}
 			
 			finish();
