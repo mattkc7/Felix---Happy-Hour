@@ -7,6 +7,8 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.TabHost;
 
 public class Felix extends TabActivity {
@@ -42,12 +44,28 @@ public class Felix extends TabActivity {
                       .setContent(intent);
         tabHost.addTab(spec);
 
-        intent = new Intent().setClass(this, SettingsActivity.class);
-        spec = tabHost.newTabSpec("settings").setIndicator("Settings",
-                          res.getDrawable(R.drawable.tab_four))
-                      .setContent(intent);
-        tabHost.addTab(spec);
+
         
         tabHost.setCurrentTab(0);
+    }
+    
+    public boolean onCreateOptionsMenu(Menu menu){
+    	MenuInflater inflater = getMenuInflater();
+    	int tab = getTabHost().getCurrentTab();
+    	
+    	switch (tab){
+	    	case 0: menu.clear();
+	    			inflater.inflate(R.menu.now_options, menu);
+	    			break;
+	    	case 1: menu.clear();
+	    			inflater.inflate(R.menu.group_options, menu);
+	    			break;
+	    	case 2: menu.clear();
+	    			inflater.inflate(R.menu.spot_options, menu);
+	    			break;
+
+    	}
+    	
+    	return (super.onCreateOptionsMenu(menu));
     }
 }
