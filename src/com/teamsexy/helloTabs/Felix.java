@@ -44,8 +44,6 @@ public class Felix extends TabActivity {
                       .setContent(intent);
         tabHost.addTab(spec);
         
-
-        
         tabHost.setCurrentTab(0);
     }
     

@@ -6,6 +6,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class EventsActivity extends FragmentActivity implements LocationListener {
@@ -13,6 +14,10 @@ public class EventsActivity extends FragmentActivity implements LocationListener
 	private LocationManager locationManager;
 	private String locationProvider;
 	private TextView notificationField;
+	
+	/* Spot database updates */
+	private FelixDbAdapter spotDbHelper;
+	//private EditView eventsview;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

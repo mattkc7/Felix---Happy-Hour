@@ -26,7 +26,6 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-
 public class SpotsActivity extends ListActivity {
     /** Called when the activity is first created. */
 	Cursor model = null;
@@ -52,8 +51,7 @@ public class SpotsActivity extends ListActivity {
         startManagingCursor(model);
         adapter = new SpotAdapter(model);
         setListAdapter(adapter);
-        
-        
+           
     }
 	
 	@Override
@@ -134,5 +132,3 @@ public class SpotsActivity extends ListActivity {
 		}
 	} //end of SpotHolder class
 }
-
-
