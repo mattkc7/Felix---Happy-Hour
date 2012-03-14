@@ -1,0 +1,32 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+  <TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="1"
+    android:shrinkColumns="1"> 
+	<TableRow>
+      <TextView android:text="Event:" />
+      <EditText android:id="@+id/eventName" />
+    </TableRow>
+   
+	  <Button android:id="@+id/addEventSpot"
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Where Is This?"/>
+	  <Button android:id="@+id/eventSave"
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Event"/>
+
+	  <Button android:id="@+id/fence"
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add a Geofence Here"/>
+	  <Button android:id="@+id/sendNotif"
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SendNotification"/>
+  </TableLayout>
+</ScrollView>
