@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +22,7 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TabHost;
 import android.widget.TextView;
+
 
 public class GroupsActivity extends ListActivity {
     /** Called when the activity is first created. */
@@ -74,6 +76,10 @@ public class GroupsActivity extends ListActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.newSpot) {
 			startActivity(new Intent(GroupsActivity.this, GroupDetailForm.class));
+			return true;
+		} else if (item.getItemId() == R.id.settings){
+			 Log.d("about to enter settingsactivity.java", "@@@");
+			startActivity(new Intent(GroupsActivity.this, SettingsActivity.class));
 			return true;
 		}
 		return (super.onOptionsItemSelected(item));

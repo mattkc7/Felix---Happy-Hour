@@ -4,7 +4,7 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry kind="lib" path="/home/genia/Android-Dev/osmdroid-android-3.0.7.jar"/>
-	<classpathentry kind="lib" path="/home/genia/Android-Dev/android-sdk-linux/extras/android/support/v4/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="/Users/matthew/android-sdks/extras/android/support/v4/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="/Users/matthew/Desktop/geoloqi.12.069.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

@@ -1,4 +1,5 @@
 
     <menu xmlns:android="http://schemas.android.com/apk/res/android">
-        <item android:id="@+id/newSpot" android:icon="@drawable/add_spot" android:title="New Group"></item>
+        <item android:id="@+id/newEvent" android:icon="@drawable/add_spot" android:title="New Group"></item>
+        <item android:id="@+id/settings" android:icon="@drawable/settings" android:title="Settings"></item>
     </menu>

@@ -4,4 +4,16 @@
     <string name="hello">Hello World, HelloTabsWidgetActivity!</string>
     <string name="app_name">HelloTabsWidget</string>
 
+        <string-array name="list_of_spots">
+<item>TGIF</item>
+<item>SteelHead</item>
+<item>Anteater Pub</item>
+</string-array>
+
+    
+    <string-array name="list_of_groups">
+<item>Jedi Knights</item>
+<item>Basketball ppl</item>
+<item>Anteater Tango Club</item>
+</string-array>
 </resources>

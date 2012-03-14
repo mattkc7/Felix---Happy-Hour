@@ -26,6 +26,7 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+
 public class SpotsActivity extends ListActivity {
     /** Called when the activity is first created. */
 	Cursor model = null;
@@ -82,6 +83,10 @@ public class SpotsActivity extends ListActivity {
 		if (item.getItemId() == R.id.newSpot) {
 			Log.w("@@@@", "did it work now?");
 			startActivity(new Intent(SpotsActivity.this, DetailForm.class));
+			return true;
+		} else if (item.getItemId() == R.id.settings){
+			 Log.d("about to enter settingsactivity.java", "@@@");
+			startActivity(new Intent(SpotsActivity.this, SettingsActivity.class));
 			return true;
 		}
 		return (super.onOptionsItemSelected(item));
