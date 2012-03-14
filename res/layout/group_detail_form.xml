@@ -28,6 +28,11 @@
        </RadioGroup>
     </TableRow>
 -->
+	<Button android:id="@+id/addFriends"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Add Friends to Group"
+    />
     <Button android:id="@+id/save"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
