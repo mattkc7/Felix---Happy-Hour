@@ -10,16 +10,35 @@
       <TextView android:text="Event:" />
       <EditText android:id="@+id/eventName" />
     </TableRow>
+    <TableRow>
+        <TextView android:text="About:"/>
+        <EditText android:id="@+id/eventAbout" />
+    </TableRow>
+    <Button android:id="@+id/addEventSpot"
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Where Is This? [Spots Activ...]"/>
+    
    
 	  <Button android:id="@+id/addEventSpot"
 	    android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Where Is This?"/>
+
+	  <TimePicker
+	      android:id="@+id/timePicker1"
+	      android:layout_width="wrap_content"
+	      android:layout_height="wrap_content" />
+
+	  <DatePicker
+	      android:id="@+id/datePicker1"
+	      android:layout_width="wrap_content"
+	      android:layout_height="wrap_content" />
+
 	  <Button android:id="@+id/eventSave"
 	    android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save Event"/>
-
+        android:text="Save Event"/>	  
 	  <Button android:id="@+id/fence"
 	    android:layout_width="match_parent"
         android:layout_height="wrap_content"
