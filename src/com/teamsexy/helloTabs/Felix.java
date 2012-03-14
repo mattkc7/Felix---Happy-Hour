@@ -43,7 +43,7 @@ public class Felix extends TabActivity {
                           res.getDrawable(R.drawable.tab_three))
                       .setContent(intent);
         tabHost.addTab(spec);
-
+        
 
         
         tabHost.setCurrentTab(0);

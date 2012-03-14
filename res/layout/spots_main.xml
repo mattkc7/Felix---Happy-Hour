@@ -4,11 +4,13 @@
   android:layout_height="match_parent">
   <ListView
     android:id="@android:id/list"
+    android:textColor="#000"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
   />
   <TextView
     android:id="@android:id/empty"
+    android:textColor="#000"
     android:layout_width="match_parent" 
     android:layout_height="match_parent"
     android:text="Click the MENU button to add a Spot!"/>
