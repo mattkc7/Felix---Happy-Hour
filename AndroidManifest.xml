@@ -119,6 +119,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
         <activity 
             android:name=".FelixMapActivity"
             android:label="@string/app_name">
@@ -129,6 +130,7 @@
             </intent-filter>
         </activity>
     </application>
+    
     <application>
     	<service
         	android:name="com.geoloqi.android.sdk.service.LQService"

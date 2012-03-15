@@ -3,6 +3,7 @@ package com.teamsexy.helloTabs;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.location.Location;
 import android.os.Bundle;
@@ -15,9 +16,10 @@ import com.geoloqi.android.sdk.LQTracker.LQTrackerProfile;
 import com.geoloqi.android.sdk.service.LQService;
 import com.geoloqi.android.sdk.service.LQService.LQBinder;
 
-public class GeofenceActivityBasic extends Activity implements Receiver.OnLocationChangedListener,
-Receiver.OnTrackerProfileChangedListener, Receiver.OnLocationUploadedListener {
-
+public class GeofenceActivityBasic extends Activity {
+	
+	public static final String TAG = "GeofenceActivityBasic";
+	
 	private FelixGeofenceManager geomanager;
 	private LQService lqService;
     private boolean bound;
@@ -26,21 +28,25 @@ Receiver.OnTrackerProfileChangedListener, Receiver.OnLocationUploadedListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.geofence_basic_front);
 		
-		geomanager = new FelixGeofenceManager(this);
+		//geomanager = new FelixGeofenceManager(this);
 		
-		Button geo = (Button)findViewById(R.id.doSomething);
-		geo.setOnClickListener(onGeo);
+		Button geoA = (Button)findViewById(R.id.doSomething);
+		geoA.setOnClickListener(onGeoA);
 		
 		Intent intent = new Intent(this, LQService.class);
 		intent.setAction(LQService.ACTION_DEFAULT);
 		intent.putExtra(LQService.EXTRA_SDK_ID, Constants.LQ_SDK_ID);
 		intent.putExtra(LQService.EXTRA_SDK_SECRET, Constants.LQ_SDK_SECRET);
-		intent.putExtra(LQService.EXTRA_C2DM_SENDER, Constants.LQ_C2DM_SENDER);
+		//intent.putExtra(LQService.EXTRA_C2DM_SENDER, Constants.LQ_C2DM_SENDER);
 		startService(intent);
 		
 		//Next:
 		//lqService.getSession()
 		//lqService.getTracker()
+		
+		/*String loc = "Location Changed: " + location.getLatitude() + ", " + location.getLongitude();
+		Toast toast = Toast.makeText(GeofenceActivityBasic.this, loc, Toast.LENGTH_SHORT);
+		toast.show();*/
 	}
 	
 	@Override
@@ -52,6 +58,7 @@ Receiver.OnTrackerProfileChangedListener, Receiver.OnLocationUploadedListener {
 	        unbindService(connection);
 	        bound = false;
 	    }
+	
 	}
 	
 	@Override
@@ -60,6 +67,7 @@ Receiver.OnTrackerProfileChangedListener, Receiver.OnLocationUploadedListener {
 		
 		Intent intent = new Intent(this, LQService.class);
 		bindService(intent, connection, 0);
+	
 	}
 	
 	/* Defines callbacks for service binding, passed to bindService() */
@@ -82,30 +90,11 @@ Receiver.OnTrackerProfileChangedListener, Receiver.OnLocationUploadedListener {
 	    }
 	};
 	
-	
-	private View.OnClickListener onGeo = new View.OnClickListener() {
+	private View.OnClickListener onGeoA = new View.OnClickListener() {
 		public void onClick(View v) {
 			Toast toast = Toast.makeText(GeofenceActivityBasic.this, "Testing", Toast.LENGTH_SHORT);
 			toast.show();
 		}
 	};
 
-	@Override
-	public void onLocationUploaded(int count) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onTrackerProfileChanged(LQTrackerProfile oldProfile,
-			LQTrackerProfile newProfile) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onLocationChanged(Location location) {
-		// TODO Auto-generated method stub
-		
-	}
 }
