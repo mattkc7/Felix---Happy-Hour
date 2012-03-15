@@ -19,7 +19,7 @@ public class FelixMapActivity extends Activity implements MapViewConstants {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.map_main);
+        setContentView(R.layout.map_main_template);
      
         mapView = (MapView) this.findViewById(R.id.mapview);  
         mapView.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
