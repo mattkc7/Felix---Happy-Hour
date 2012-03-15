@@ -23,6 +23,7 @@ public class EventsActivity extends ListActivity {
 	
 	/* Notification Management */
 	SMSnotifier notifier = null;
+	FelixGeofenceManager geomanager = null;
 
 	/* Location related */
 	private LocationManager locationManager;
@@ -35,6 +36,7 @@ public class EventsActivity extends ListActivity {
 		setContentView(R.layout.mc_events_main);
 
 		notifier = new SMSnotifier(this);
+		geomanager = new FelixGeofenceManager(this);
 		// Example use:
 		// notifier.sendSMS("5556", "giggity");
 	
@@ -46,7 +48,18 @@ public class EventsActivity extends ListActivity {
 		//helper.close();
 		//locationManager.removeUpdates(this);
 	}
-
+	
+	@Override
+	public void onPause(){
+		super.onPause();
+		geomanager.onActivityPause();
+	}
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		geomanager.onActivityResume();
+	}
 
 	@Override
 	public void onListItemClick(ListView list, View view, int position, long id) {

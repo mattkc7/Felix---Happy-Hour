@@ -27,6 +27,7 @@ public class GroupsActivity extends ListActivity {
 
 	EditText name=null;
 	
+	FelixGeofenceManager geomanager = null;
 	
 	public final static String ID_EXTRA="apt.tutorial._ID";
 	
@@ -43,6 +44,8 @@ public class GroupsActivity extends ListActivity {
         startManagingCursor(model);
         adapter = new SpotAdapter(model);
         setListAdapter(adapter);
+        
+        geomanager = new FelixGeofenceManager(this);
 
     }
 	
@@ -50,6 +53,18 @@ public class GroupsActivity extends ListActivity {
 	public void onDestroy(){
 		super.onDestroy();
 		helper.close(); 
+	}
+	
+	@Override
+	public void onPause(){
+		super.onPause();
+		geomanager.onActivityPause();
+	}
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		geomanager.onActivityResume();
 	}
 
 	  @Override

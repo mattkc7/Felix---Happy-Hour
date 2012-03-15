@@ -30,6 +30,8 @@ public class SpotsActivity extends ListActivity {
 	EditText address=null;
 	RadioGroup types=null;
 	
+	FelixGeofenceManager geomanager = null;
+	
 	public final static String ID_EXTRA="apt.tutorial._ID";
 	
 	@Override 
@@ -46,12 +48,25 @@ public class SpotsActivity extends ListActivity {
         adapter = new SpotAdapter(model);
         setListAdapter(adapter);
            
+        geomanager = new FelixGeofenceManager(this);
     }
 	
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
 		helper.close(); 
+	}
+	
+	@Override
+	public void onPause(){
+		super.onPause();
+		geomanager.onActivityPause();
+	}
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		geomanager.onActivityResume();
 	}
 
 	  @Override
