@@ -1,5 +1,5 @@
 package com.teamsexy.helloTabs;
 
-public class MapActivity {
+public class FelixMapActivity {
 
 }

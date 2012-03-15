@@ -103,7 +103,7 @@
         <activity android:name=".SettingsActivity"></activity>
         <activity android:name=".NewEventForms"></activity>
         <activity 
-            android:name=".MapActivity"
+            android:name=".FelixMapActivity"
             android:theme="@android:style/Theme.NoTitleBar">   
         </activity>
     </application>
