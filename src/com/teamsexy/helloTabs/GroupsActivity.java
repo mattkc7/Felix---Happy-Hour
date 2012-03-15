@@ -74,7 +74,7 @@ public class GroupsActivity extends ListActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.newSpot) {
+		if (item.getItemId() == R.id.newEvent) {
 			startActivity(new Intent(GroupsActivity.this, GroupDetailForm.class));
 			return true;
 		} else if (item.getItemId() == R.id.settings){
