@@ -17,12 +17,7 @@ import android.widget.Toast;
 import com.geoloqi.android.sdk.service.LQService;
 import com.geoloqi.android.sdk.service.LQService.LQBinder;
 
-public class GeofenceActivityBasic extends Activity implements LocationListener {
-	
-	public static final String TAG = "GeofenceActivityBasic";
-	
-	private LocationManager locationManager;
-	private String provider;
+public class GeofenceActivityBasic extends Activity {
 	
 	private FelixGeofenceManager geomanager;
 	private LQService lqService;
@@ -31,8 +26,6 @@ public class GeofenceActivityBasic extends Activity implements LocationListener 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.geofence_basic_front);
-		
-		//geomanager = new FelixGeofenceManager(this);
 		
 		Button geoA = (Button)findViewById(R.id.doSomething);
 		geoA.setOnClickListener(onGeoA);
@@ -44,39 +37,31 @@ public class GeofenceActivityBasic extends Activity implements LocationListener 
 		//intent.putExtra(LQService.EXTRA_C2DM_SENDER, Constants.LQ_C2DM_SENDER);
 		startService(intent);
 		
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		provider = locationManager.GPS_PROVIDER;
-		
-		Location location = locationManager.getLastKnownLocation(provider);
-		if (location != null) {
-			showLocation(location);
-		}
+		geomanager = new FelixGeofenceManager(this);
 		
 		//Next:
 		//lqService.getSession()
 		//lqService.getTracker()
-		
 	}
 	
 	@Override
 	public void onPause(){
 		super.onPause();
 		
-		locationManager.removeUpdates(this);
+		geomanager.removeLocationUpdates();
 		
 		// Unbind from LQService
 	    if (bound) {
 	        unbindService(connection);
 	        bound = false;
 	    }
-	
 	}
 	
 	@Override
 	public void onResume(){
 		super.onResume();
 		
-		locationManager.requestLocationUpdates(provider, 400, 1, this);
+		geomanager.requestLocationUpdates();
 		
 		Intent intent = new Intent(this, LQService.class);
 		bindService(intent, connection, 0);
@@ -108,34 +93,5 @@ public class GeofenceActivityBasic extends Activity implements LocationListener 
 			toast.show();
 		}
 	};
-	
-	public void showLocation(Location location) {
-		String loc = "Location Changed: " + location.getLatitude() + ", " + location.getLongitude();
-		Toast toast = Toast.makeText(GeofenceActivityBasic.this, loc, Toast.LENGTH_SHORT);
-		toast.show();
-	}
-
-	@Override
-	public void onLocationChanged(Location location) {
-		showLocation(location);
-	}
-
-	@Override
-	public void onProviderDisabled(String arg0) {
-		Toast.makeText(this, "Disabled provider " + provider,
-				Toast.LENGTH_SHORT).show();
-	}
-
-	@Override
-	public void onProviderEnabled(String arg0) {
-		Toast.makeText(this, "Enabled new provider " + provider,
-				Toast.LENGTH_SHORT).show();
-	}
-
-	@Override
-	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
