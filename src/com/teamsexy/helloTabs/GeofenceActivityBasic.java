@@ -4,16 +4,19 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.geoloqi.android.sdk.LQTracker.LQTrackerProfile;
 import com.geoloqi.android.sdk.service.LQService;
 import com.geoloqi.android.sdk.service.LQService.LQBinder;
 
-public class GeofenceActivityBasic extends Activity {
+public class GeofenceActivityBasic extends Activity implements Receiver.OnLocationChangedListener,
+Receiver.OnTrackerProfileChangedListener, Receiver.OnLocationUploadedListener {
 
 	private FelixGeofenceManager geomanager;
 	private LQService lqService;
@@ -34,6 +37,10 @@ public class GeofenceActivityBasic extends Activity {
 		intent.putExtra(LQService.EXTRA_SDK_SECRET, Constants.LQ_SDK_SECRET);
 		intent.putExtra(LQService.EXTRA_C2DM_SENDER, Constants.LQ_C2DM_SENDER);
 		startService(intent);
+		
+		//Next:
+		//lqService.getSession()
+		//lqService.getTracker()
 	}
 	
 	@Override
@@ -82,4 +89,23 @@ public class GeofenceActivityBasic extends Activity {
 			toast.show();
 		}
 	};
+
+	@Override
+	public void onLocationUploaded(int count) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onTrackerProfileChanged(LQTrackerProfile oldProfile,
+			LQTrackerProfile newProfile) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		
+	}
 }
