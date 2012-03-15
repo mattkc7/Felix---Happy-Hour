@@ -215,6 +215,7 @@ public class NewEventForms extends Activity {
 			
 			if (eventID == null){
 				//helper.insert(name.getText().toString()); //, address.getText().toString(), type);
+				
 				helper.insert(selectedSpot, selectedTime, selectedDate, selectedGroup);
 			} else {
 				helper.update(eventID, selectedSpot, selectedTime, selectedDate, selectedGroup); //, address.getText().toString(), type);

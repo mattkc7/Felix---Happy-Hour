@@ -1,18 +1,29 @@
 package com.teamsexy.helloTabs;
 
+import java.util.Random;
+
+import com.teamsexy.helloTabs.SpotsActivity.SpotAdapter;
+import com.teamsexy.helloTabs.SpotsActivity.SpotHolder;
+
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 public class EventsActivity extends ListActivity {
@@ -20,7 +31,7 @@ public class EventsActivity extends ListActivity {
 	/* Data management */
 	Cursor model = null;
 	EventsHelper helper = null;
-	
+	EventAdapter adapter = null;
 	/* Notification Management */
 	SMSnotifier notifier = null;
 	FelixGeofenceManager geomanager = null;
@@ -39,6 +50,12 @@ public class EventsActivity extends ListActivity {
 		geomanager = new FelixGeofenceManager(this);
 		// Example use:
 		// notifier.sendSMS("5556", "giggity");
+		
+		helper= new EventsHelper(this);
+        model=helper.getAll();
+        startManagingCursor(model);
+        adapter = new EventAdapter(model);
+        setListAdapter(adapter);
 	
 	}
 
@@ -63,11 +80,11 @@ public class EventsActivity extends ListActivity {
 
 	@Override
 	public void onListItemClick(ListView list, View view, int position, long id) {
-		Intent i = new Intent(EventsActivity.this, NewEventForms.class);
-
-		i.putExtra(ID_EXTRA, String.valueOf(id));
-		System.out.println("about to start intent");
-		startActivity(i);
+//		Intent i = new Intent(EventsActivity.this, NewEventForms.class);
+//
+//		i.putExtra(ID_EXTRA, String.valueOf(id));
+//		System.out.println("about to start intent");
+//		startActivity(i);
 	}
 
 	@Override
@@ -88,5 +105,55 @@ public class EventsActivity extends ListActivity {
 		}
 		return (super.onOptionsItemSelected(item));
 	}
+	
+	//holder + adapter classes
+	class EventAdapter extends CursorAdapter {
+		EventAdapter(Cursor c) {
+			super(EventsActivity.this, c);
+		}
+	
+		@Override
+		public void bindView(View row, Context ctxt, Cursor c) {
+			EventHolder holder=(EventHolder)row.getTag();
+			holder.populateFrom(c, helper); 
+		}
+		
+		@Override
+		public View newView(Context ctxt, Cursor c,ViewGroup parent) { 
+			LayoutInflater inflater=getLayoutInflater();
+			View row=inflater.inflate(R.layout.other_event_row, parent, false);
+			EventHolder holder=new EventHolder(row);
+			row.setTag(holder);
+		    return(row);
+		  }
+	} // end of class SpotAdapter
+	
+	
+	static class EventHolder {
+		private TextView spotTime = null;
+		private TextView groupDate = null;
+		private ImageView icon = null;
+
+		EventHolder(View row) {
+			spotTime = (TextView)row.findViewById(R.id.spot_and_time);
+			//groupDate = (TextView) row.findViewById(R.id.group_and_date);
+			icon = (ImageView) row.findViewById(R.id.icon);
+		}
+
+		void populateFrom(Cursor c, EventsHelper helper) {
+			String myBuffer = helper.getSpot(c);
+			Random hour = new Random();
+			int hr = hour.nextInt(7) + 1;
+			myBuffer = myBuffer + " @ " + String.valueOf(hr) + "pm";
+			spotTime.setText(myBuffer);
+			//groupDate.setText(myBuffer);
+			
+//			if (helper.getType(c).equals("happy_hr")) {
+//				icon.setImageResource(R.drawable.happy_hr_spot);
+//			} else {
+//				icon.setImageResource(R.drawable.my_spot);
+//			}
+		}
+	} //end of SpotHolder class
 
 }
