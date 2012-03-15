@@ -87,5 +87,10 @@ public class EventsActivity extends ListActivity {
 		notifier.sendSMS("5556", "You're Invited! " + inviteText);
 		notifier.sendSMS("5558", "You're Invited! " + inviteText);
 	}
+	
+	public void notifyLeaving(String leavingText) {
+		notifier.sendSMS("5556", "Heading out, see you soon. " + leavingText);
+		notifier.sendSMS("5558", "Heading out, see you soon. " + leavingText);
+	}
 
 }
