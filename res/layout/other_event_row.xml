@@ -1,0 +1,22 @@
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dip" >
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dip"
+            android:src="@drawable/red_flag" />
+
+        <TextView
+            android:id="@+id/spot_and_time"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </LinearLayout>

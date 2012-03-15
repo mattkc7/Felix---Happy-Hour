@@ -69,7 +69,7 @@ public class GroupsActivity extends ListActivity {
 
 	  @Override
 	public void onListItemClick(ListView list, View view, int position, long id) {
-		Intent i = new Intent(GroupsActivity.this, GroupDetailForm.class);
+		Intent i = new Intent(GroupsActivity.this, GroupMembersView.class);
 
 		i.putExtra(ID_EXTRA, String.valueOf(id));
 		System.out.println("about to start intent");

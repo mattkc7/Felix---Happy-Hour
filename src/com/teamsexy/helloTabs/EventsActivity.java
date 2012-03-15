@@ -1,22 +1,30 @@
 package com.teamsexy.helloTabs;
 
+import java.util.Calendar;
+
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class EventsActivity extends ListActivity {
 
 	/* Data management */
 	Cursor model = null;
 	EventsHelper helper = null;
-	
+	EventAdapter adapter = null;
 	/* Notification Management */
 	SMSnotifier notifier = null;
 	FelixGeofenceManager geomanager = null;
@@ -34,6 +42,12 @@ public class EventsActivity extends ListActivity {
 		
 		// Example use:
 		// notifier.sendSMS("5556", "giggity");
+		
+		helper= new EventsHelper(this);
+        model=helper.getAll();
+        startManagingCursor(model);
+        adapter = new EventAdapter(model);
+        setListAdapter(adapter);
 	
 	}
 
@@ -58,11 +72,11 @@ public class EventsActivity extends ListActivity {
 
 	@Override
 	public void onListItemClick(ListView list, View view, int position, long id) {
-		Intent i = new Intent(EventsActivity.this, NewEventForms.class);
-
-		i.putExtra(ID_EXTRA, String.valueOf(id));
-		System.out.println("about to start intent");
-		startActivity(i);
+//		Intent i = new Intent(EventsActivity.this, NewEventForms.class);
+//
+//		i.putExtra(ID_EXTRA, String.valueOf(id));
+//		System.out.println("about to start intent");
+//		startActivity(i);
 	}
 
 	@Override
@@ -83,7 +97,7 @@ public class EventsActivity extends ListActivity {
 		}
 		return (super.onOptionsItemSelected(item));
 	}
-	
+
 	/* Event Coordination and Notification */
 	public void notifyInvitation(String inviteText) {
 		notifier.sendSMS("5556", "You're Invited! " + inviteText);
@@ -94,5 +108,84 @@ public class EventsActivity extends ListActivity {
 		notifier.sendSMS("5556", "Heading out, see you soon. " + leavingText);
 		notifier.sendSMS("5558", "Heading out, see you soon. " + leavingText);
 	}
+	
+	//holder + adapter classes
+	class EventAdapter extends CursorAdapter {
+		EventAdapter(Cursor c) {
+			super(EventsActivity.this, c);
+		}
+	
+		@Override
+		public void bindView(View row, Context ctxt, Cursor c) {
+			EventHolder holder=(EventHolder)row.getTag();
+			holder.populateFrom(c, helper); 
+		}
+		
+		@Override
+		public View newView(Context ctxt, Cursor c,ViewGroup parent) { 
+			LayoutInflater inflater=getLayoutInflater();
+			View row=inflater.inflate(R.layout.event_row, parent, false);
+			EventHolder holder=new EventHolder(row);
+			row.setTag(holder);
+		    return(row);
+		  }
+	} // end of class SpotAdapter
+	
+	
+	static class EventHolder {
+		private TextView spotTime = null;
+		private TextView groupDate = null;
+		private ImageView icon = null;
+		int m, d;
 
+		EventHolder(View row) {
+			spotTime = (TextView)row.findViewById(R.id.spot_and_time);
+			groupDate = (TextView) row.findViewById(R.id.group_and_date);
+			icon = (ImageView) row.findViewById(R.id.icon);
+		}
+
+		void populateFrom(Cursor c, EventsHelper helper) {
+			String myBuffer = helper.getSpot(c) + " @ " + helper.getTime(c);
+			//Random hour = new Random();
+			//int hr = hour.nextInt(7) + 1;
+			//myBuffer = myBuffer + " @ " + "5:05pm";
+			
+			icon.setImageResource(R.drawable.yellow_flag);
+			spotTime.setText(myBuffer);
+			
+			m = parseMonth(helper.getDate(c));
+			d = parseDay(helper.getDate(c));
+			
+			final Calendar cc = Calendar.getInstance();
+			int mMonth = cc.get(Calendar.MONTH)+1;
+			int mDay = cc.get(Calendar.DAY_OF_MONTH);
+			Log.d("@@@", String.valueOf(mMonth));
+			Log.d("@@@", String.valueOf(mDay));
+			Log.d("--", String.valueOf(m));
+			Log.d("--", String.valueOf(d));
+			
+			if ((m == mMonth) && (d == mDay)){
+				icon.setImageResource(R.drawable.red_flag);
+			}
+			myBuffer = helper.getGroup(c) + " - " + String.valueOf(m)+"/"+String.valueOf(d);//helper.getDate(c);
+			groupDate.setText(myBuffer);
+			
+			
+		}
+		
+		public static int parseMonth(String s){
+			int hyphen1 = s.indexOf("-");
+			  String month = s.substring(0, hyphen1);
+			  int f = Integer.valueOf(month);
+			  return f;
+		}
+		
+		public static int parseDay(String s){
+			int hyphen1 = s.indexOf("-");
+			int hyphen2 = s.indexOf("-", hyphen1+1);
+			String day = s.substring(hyphen1+1, hyphen2);
+			int f = Integer.valueOf(day);
+			return f;
+		}
+	} //end of SpotHolder class
 }

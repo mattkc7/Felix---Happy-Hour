@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class EventsHelper extends SQLiteOpenHelper {
 
@@ -40,7 +41,7 @@ public class EventsHelper extends SQLiteOpenHelper {
 		cv.put("chosenTime", time); 
 		cv.put("chosenDate", date); 
 		cv.put("chosenGroup", group); 
-		getWritableDatabase().insert("events", "name", cv); 
+		getWritableDatabase().insert("events", "chosenSpot", cv); 
 	}
 	
 	public void update(String id, String spot, String time, String date, String group) {
@@ -52,15 +53,31 @@ public class EventsHelper extends SQLiteOpenHelper {
 		cv.put("chosenDate", date); 
 		cv.put("chosenGroup", group); 
 
-		getWritableDatabase().update("events", cv, "_ID=?", args);
+		getWritableDatabase().update("events", cv, "_id=?", args);
 	}
 	
 	public Cursor getAll() { 
-		return(getReadableDatabase().rawQuery("SELECT _id, name FROM events ORDER BY name", null));
+		return(getReadableDatabase().rawQuery("SELECT * FROM events ORDER BY chosenSpot", null));
 	}
 	
 	public String getSpot(Cursor c) { 
+		//return(c.getString(1));
 		return(c.getString(1));
+	}
+	
+	public String getTime(Cursor c) { 
+		return(c.getString(2));
+		//return String.valueOf(c.getColumnCount());
+	}
+	
+	public String getGroup(Cursor c) { 
+		return(c.getString(4));
+		//return String.valueOf(c.getColumnCount());
+	}
+	
+	public String getDate(Cursor c) { 
+		return(c.getString(3));
+		//return String.valueOf(c.getColumnCount());
 	}
 	
 }
