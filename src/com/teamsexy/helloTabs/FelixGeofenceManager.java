@@ -1,7 +1,10 @@
 package com.teamsexy.helloTabs;
 
-import com.geoloqi.android.sdk.service.LQService;
-import com.geoloqi.android.sdk.service.LQService.LQBinder;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -12,7 +15,15 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.Toast;
+
+import com.geoloqi.android.sdk.LQException;
+import com.geoloqi.android.sdk.LQSession;
+import com.geoloqi.android.sdk.LQSession.OnRunApiRequestListener;
+import com.geoloqi.android.sdk.LQTracker;
+import com.geoloqi.android.sdk.service.LQService;
+import com.geoloqi.android.sdk.service.LQService.LQBinder;
 
 /**
  * FelixGeofenceManager
@@ -22,8 +33,11 @@ import android.widget.Toast;
  * Geoloqi Geofencing API
  */
 public class FelixGeofenceManager implements LocationListener {
-
+	public static final String TAG = "Geofencing";
+	
 	private Context context;
+	LQSession fsession;
+	LQTracker ftracker;
 	
 	// Location
 	private LocationManager locationManager;
@@ -53,9 +67,6 @@ public class FelixGeofenceManager implements LocationListener {
 		//intent.putExtra(LQService.EXTRA_C2DM_SENDER, Constants.LQ_C2DM_SENDER);
 		context.startService(intent);
 		
-		//Next:
-		//lqService.getSession()
-		//lqService.getTracker()
 	}
 	
 	public void onLocationChanged (Location location) {
@@ -70,6 +81,51 @@ public class FelixGeofenceManager implements LocationListener {
 	
 	public void requestLocationUpdates () {
 		locationManager.requestLocationUpdates(provider, 400, 1, this);
+	}
+	
+	public void geoloqi() {
+		
+		
+		if (lqService != null) {
+			Toast.makeText(context, "Sup gurl", Toast.LENGTH_SHORT).show();
+			
+		    LQSession session = lqService.getSession();
+		 
+		    // Build your request
+		    HttpGet request = new HttpGet();
+		    try {
+		        request.setURI(new URI("https://api.geoloqi.com/1/account/profile"));
+		        // TODO
+		    
+		    } catch (URISyntaxException e) {
+		   
+		    	Toast.makeText(context, "You fail, ho", Toast.LENGTH_SHORT);
+		    }
+		 
+		    // Send the request
+		    session.runAPIRequest(request, new OnRunApiRequestListener() {
+		        public void onRunAPIRequest(HttpResponse response, LQException e) {
+		            if (e != null) {
+		                // Oops, an Exception was thrown!
+		                Log.e(TAG, e.getMessage());
+		            } else {
+		            	Toast.makeText(context, "party time", Toast.LENGTH_SHORT).show();
+		            }
+		        }
+
+				@Override
+				public void onComplete(HttpResponse arg0) {
+					Toast.makeText(context, "party time complete", Toast.LENGTH_SHORT).show();
+					
+				}
+
+				@Override
+				public void onFailure(LQSession arg0, LQException arg1) {
+					// TODO Auto-generated method stub
+					
+				}
+		    });
+		}
 	}
 	
 	public void onActivityPause () {

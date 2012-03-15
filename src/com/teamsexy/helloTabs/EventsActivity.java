@@ -30,6 +30,8 @@ public class EventsActivity extends ListActivity {
 		notifier = new SMSnotifier(this);
 		geomanager = new FelixGeofenceManager(this);
 		
+		geomanager.geoloqi();
+		
 		// Example use:
 		// notifier.sendSMS("5556", "giggity");
 	
