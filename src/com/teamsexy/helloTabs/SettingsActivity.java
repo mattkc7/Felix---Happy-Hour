@@ -1,15 +1,9 @@
 package com.teamsexy.helloTabs;
 
-import com.teamsexy.helloTabs.R;
-
-import android.app.Activity;
-import android.os.Bundle;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-//import android.widget.TextView;
 import android.app.ListActivity;
+import android.os.Bundle;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.CompoundButton;
 
 public class SettingsActivity extends ListActivity{
 	
