@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.Menu;
@@ -43,7 +44,16 @@ public class EventsActivity extends ListActivity {
 		notifier = new SMSnotifier(this);
 		// Example use:
 		// notifier.sendSMS("5556", "giggity");
+		
+		Button mapbutton = (Button)findViewById(R.id.testMapGo);
+		mapbutton.setOnClickListener(onMap);
 	}
+	
+	private View.OnClickListener onMap = new View.OnClickListener() {
+		public void onClick(View v) {
+			startActivity(new Intent(EventsActivity.this, FelixMapActivity.class));
+		}
+	};
 
 	@Override
 	public void onDestroy(){
