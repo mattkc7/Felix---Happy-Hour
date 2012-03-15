@@ -1,0 +1,98 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+  <TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="1"
+    android:shrinkColumns="1">
+
+
+      <TextView
+          android:id="@+id/textView1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="center_vertical|center_horizontal"
+          android:text="Pick a Spot!"
+          android:textAppearance="?android:attr/textAppearanceMedium" />
+
+      <Spinner
+          android:id="@+id/select_spot"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+<!--  
+      <TextView
+          android:id="@+id/textView2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="center_vertical|center_horizontal"
+          android:text="Happy Hour today?"
+          android:textAppearance="?android:attr/textAppearanceMedium" /> -->
+
+      
+      <Button
+          android:id="@+id/datePickerBtn"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Happy Hour today?" />
+      
+      <Button
+          android:id="@+id/timePickerBtn"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Best time for a drink?" />
+      <!--  
+      <DatePicker
+          android:id="@+id/datePicker1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+	-->
+
+      <LinearLayout
+          android:id="@+id/linearLayout1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" >
+
+          
+          <!--  
+          <TextView
+              android:id="@+id/textView3"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Time:"
+              android:textAppearance="?android:attr/textAppearanceMedium" />
+
+          <TimePicker
+              android:id="@+id/timePicker1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="right" />
+-->
+
+      </LinearLayout>
+
+      <TextView
+          android:id="@+id/textView4"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="center_vertical|center_horizontal"
+          android:text="Select your buddies"
+          android:textAppearance="?android:attr/textAppearanceMedium" />
+
+      <Spinner
+          android:id="@+id/select_groups"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+
+      <Button
+          android:id="@+id/create_event"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="#FFF"
+          android:textStyle="bold"
+          android:background="@drawable/create_event"
+          android:text="Create Event!" />
+
+  </TableLayout>
+</ScrollView>
