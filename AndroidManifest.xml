@@ -108,6 +108,7 @@
         
         <activity android:name=".DetailForm"></activity>
         <activity android:name=".GroupDetailForm"></activity>
+        <activity android:name=".GroupMembersView"></activity>
         <activity android:name=".SettingsActivity"></activity>
         <activity android:name=".NewEventForms"></activity>
         <activity 
