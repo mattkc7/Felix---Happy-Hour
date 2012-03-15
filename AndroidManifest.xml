@@ -102,6 +102,10 @@
         <activity android:name=".GroupDetailForm"></activity>
         <activity android:name=".SettingsActivity"></activity>
         <activity android:name=".NewEventForms"></activity>
+        <activity 
+            android:name=".MapActivity"
+            android:theme="@android:style/Theme.NoTitleBar">   
+        </activity>
     </application>
 
 </manifest>
