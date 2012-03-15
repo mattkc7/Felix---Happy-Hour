@@ -12,8 +12,9 @@
 
     
     <string-array name="list_of_groups">
-<item>Jedi Knights</item>
+<item>Informatics Dept.</item>
 <item>Basketball ppl</item>
 <item>Anteater Tango Club</item>
+<item>IGSA folks</item>
 </string-array>
 </resources>

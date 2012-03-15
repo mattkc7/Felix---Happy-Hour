@@ -1,5 +1,6 @@
 package com.teamsexy.helloTabs;
 
+import java.util.Calendar;
 import java.util.Random;
 
 import com.teamsexy.helloTabs.SpotsActivity.SpotAdapter;
@@ -121,7 +122,7 @@ public class EventsActivity extends ListActivity {
 		@Override
 		public View newView(Context ctxt, Cursor c,ViewGroup parent) { 
 			LayoutInflater inflater=getLayoutInflater();
-			View row=inflater.inflate(R.layout.other_event_row, parent, false);
+			View row=inflater.inflate(R.layout.event_row, parent, false);
 			EventHolder holder=new EventHolder(row);
 			row.setTag(holder);
 		    return(row);
@@ -133,26 +134,56 @@ public class EventsActivity extends ListActivity {
 		private TextView spotTime = null;
 		private TextView groupDate = null;
 		private ImageView icon = null;
+		int m, d;
 
 		EventHolder(View row) {
 			spotTime = (TextView)row.findViewById(R.id.spot_and_time);
-			//groupDate = (TextView) row.findViewById(R.id.group_and_date);
+			groupDate = (TextView) row.findViewById(R.id.group_and_date);
 			icon = (ImageView) row.findViewById(R.id.icon);
 		}
 
 		void populateFrom(Cursor c, EventsHelper helper) {
-			String myBuffer = helper.getSpot(c);
-			Random hour = new Random();
-			int hr = hour.nextInt(7) + 1;
-			myBuffer = myBuffer + " @ " + String.valueOf(hr) + "pm";
-			spotTime.setText(myBuffer);
-			//groupDate.setText(myBuffer);
+			String myBuffer = helper.getSpot(c) + " @ " + helper.getTime(c);
+			//Random hour = new Random();
+			//int hr = hour.nextInt(7) + 1;
+			//myBuffer = myBuffer + " @ " + "5:05pm";
 			
-//			if (helper.getType(c).equals("happy_hr")) {
-//				icon.setImageResource(R.drawable.happy_hr_spot);
-//			} else {
-//				icon.setImageResource(R.drawable.my_spot);
-//			}
+			icon.setImageResource(R.drawable.yellow_flag);
+			spotTime.setText(myBuffer);
+			
+			m = parseMonth(helper.getDate(c));
+			d = parseDay(helper.getDate(c));
+			
+			final Calendar cc = Calendar.getInstance();
+			int mMonth = cc.get(Calendar.MONTH)+1;
+			int mDay = cc.get(Calendar.DAY_OF_MONTH);
+			Log.d("@@@", String.valueOf(mMonth));
+			Log.d("@@@", String.valueOf(mDay));
+			Log.d("--", String.valueOf(m));
+			Log.d("--", String.valueOf(d));
+			
+			if ((m == mMonth) && (d == mDay)){
+				icon.setImageResource(R.drawable.red_flag);
+			}
+			myBuffer = helper.getGroup(c) + " - " + String.valueOf(m)+"/"+String.valueOf(d);//helper.getDate(c);
+			groupDate.setText(myBuffer);
+			
+			
+		}
+		
+		public static int parseMonth(String s){
+			int hyphen1 = s.indexOf("-");
+			  String month = s.substring(0, hyphen1);
+			  int f = Integer.valueOf(month);
+			  return f;
+		}
+		
+		public static int parseDay(String s){
+			int hyphen1 = s.indexOf("-");
+			int hyphen2 = s.indexOf("-", hyphen1+1);
+			String day = s.substring(hyphen1+1, hyphen2);
+			int f = Integer.valueOf(day);
+			return f;
 		}
 	} //end of SpotHolder class
 

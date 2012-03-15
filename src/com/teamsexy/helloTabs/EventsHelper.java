@@ -53,11 +53,11 @@ public class EventsHelper extends SQLiteOpenHelper {
 		cv.put("chosenDate", date); 
 		cv.put("chosenGroup", group); 
 
-		getWritableDatabase().update("events", cv, "_ID=?", args);
+		getWritableDatabase().update("events", cv, "_id=?", args);
 	}
 	
 	public Cursor getAll() { 
-		return(getReadableDatabase().rawQuery("SELECT _id, chosenSpot FROM events ORDER BY chosenSpot", null));
+		return(getReadableDatabase().rawQuery("SELECT * FROM events ORDER BY chosenSpot", null));
 	}
 	
 	public String getSpot(Cursor c) { 
@@ -66,18 +66,18 @@ public class EventsHelper extends SQLiteOpenHelper {
 	}
 	
 	public String getTime(Cursor c) { 
-		//return(c.getString(2));
-		return String.valueOf(c.getColumnCount());
+		return(c.getString(2));
+		//return String.valueOf(c.getColumnCount());
 	}
 	
 	public String getGroup(Cursor c) { 
-		//return(c.getString(3));
-		return String.valueOf(c.getColumnCount());
+		return(c.getString(4));
+		//return String.valueOf(c.getColumnCount());
 	}
 	
 	public String getDate(Cursor c) { 
-		//return(c.getString(1));
-		return String.valueOf(c.getColumnCount());
+		return(c.getString(3));
+		//return String.valueOf(c.getColumnCount());
 	}
 	
 }
