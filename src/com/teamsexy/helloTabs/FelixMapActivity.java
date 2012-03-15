@@ -1,6 +1,7 @@
 package com.teamsexy.helloTabs;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -18,6 +19,9 @@ import com.google.android.maps.OverlayItem;
  * Based on tutorial from: 
  * http://www.vogella.de/articles/AndroidLocationAPI/article.html#locationapi
  * @author genia / Lars Vogel
+ * 
+ * Call with this or similar:
+ * startActivity(new Intent([CURRENTACTIVITY].this, FelixMapActivity.class));
  */
 public class FelixMapActivity extends MapActivity {
 	
@@ -25,18 +29,24 @@ public class FelixMapActivity extends MapActivity {
 	private MapView mapView;
 	private LocationManager locationManager;
 	private FelixOverlay itemizedoverlay;
-
+	private GeoPoint homebase;
+	
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
-		setContentView(R.layout.map_main); // bind the layout to the activity
+		setContentView(R.layout.map_main);
 
-		// create a map view
+		// Initialize map view
 		mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
-		// Either satellite or 2d 
+		
+		// Set home base in Irvine
+		homebase = new GeoPoint(34, -118);
+		
+		// Overhead view
 		mapView.setSatellite(true);
 		mapController = mapView.getController();
-		mapController.setZoom(14); // Zoon 1 is world view
+		mapController.setZoom(14);
+		
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
 				0, new GeoUpdateHandler());
@@ -77,9 +87,18 @@ public class FelixMapActivity extends MapActivity {
 	}
 
 	private void createMarker() {
-		GeoPoint p = mapView.getMapCenter();
+		GeoPoint p = new GeoPoint(34, -118);
 		OverlayItem overlayitem = new OverlayItem(p, "", "");
 		itemizedoverlay.addOverlay(overlayitem);
 		mapView.getOverlays().add(itemizedoverlay);
+	}
+	
+	/* Methods to Create */
+	public void showAllSpots () {
+		// TODO: Show all spots
+	}
+	
+	public void viewSpot () {
+		// TODO: Create a spot somewhere
 	}
 }

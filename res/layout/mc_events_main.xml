@@ -13,12 +13,6 @@
     android:layout_height="match_parent"
     android:text="Click the MENU button to create a new Happy Hour!"/>
   
-  <Button android:id="@+id/testMapGo"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="Go to Map"
-    />
-  
 </FrameLayout>
 
 <!-- 
