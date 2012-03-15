@@ -2,10 +2,12 @@ package com.teamsexy.helloTabs;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Random;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -50,9 +52,13 @@ public class FelixGeofenceManager implements LocationListener {
 	public FelixGeofenceManager (Context ctx) {
 		this.context = ctx;
 		
+		Toast.makeText(context, "Searching for receiver....", Toast.LENGTH_LONG).show();
+		
 		// Location
 		locationManager = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
 		provider = locationManager.GPS_PROVIDER;
+		
+		addProximities();
 		
 		Location location = locationManager.getLastKnownLocation(provider);
 		if (location != null) {
@@ -73,6 +79,19 @@ public class FelixGeofenceManager implements LocationListener {
 		Toast.makeText(context, 
 				"Location Changed: " + location.getLatitude() + ", " + location.getLongitude(), 
 				Toast.LENGTH_SHORT).show();
+	}
+	
+	private void addProximities() {
+		
+		Random r = new Random();
+		
+		for (int i = 0; i < 100; i++) {
+			locationManager.addProximityAlert((new Double(r.nextInt(180) - 90)),
+					new Double( r.nextInt(360) - 180), 
+					new Float(r.nextInt(150) + 50), -1,
+					PendingIntent.getBroadcast(context, 0, new Intent("android.intent.action.PROXIMITY_ALERT"), 0));
+		}
+		
 	}
 	
 	public void removeLocationUpdates () {
