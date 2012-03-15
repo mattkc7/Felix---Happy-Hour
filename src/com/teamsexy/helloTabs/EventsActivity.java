@@ -37,18 +37,8 @@ public class EventsActivity extends ListActivity {
 		notifier = new SMSnotifier(this);
 		// Example use:
 		// notifier.sendSMS("5556", "giggity");
-		
-		Button geo = (Button)findViewById(R.id.geo);
-		geo.setOnClickListener(onGeo);
-	}
 	
-	private View.OnClickListener onGeo = new View.OnClickListener() {
-		public void onClick(View v) {
-			
-			startActivity(new Intent(EventsActivity.this, 
-					GeofenceActivityBasic.class));
-		}
-	};
+	}
 
 	@Override
 	public void onDestroy(){
