@@ -33,7 +33,8 @@ public class FelixMapActivity extends MapActivity {
 	
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
-		setContentView(R.layout.map_main);
+		// Commented out to avoid merge conflict.
+		//setContentView(R.layout.map_main);
 
 		// Initialize map view
 		mapView = (MapView) findViewById(R.id.mapview);
