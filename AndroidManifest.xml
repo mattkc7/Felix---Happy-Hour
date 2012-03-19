@@ -110,7 +110,7 @@
         <activity android:name=".GroupDetailForm"></activity>
         <activity android:name=".GroupMembersView"></activity>
         <activity android:name=".SettingsActivity"></activity>
-        <activity android:name=".NewEventForms"></activity>
+        <activity android:name=".EventCreateForm"></activity>
         <activity 
             android:name=".GeofenceActivityBasic"
             android:label="@string/app_name">

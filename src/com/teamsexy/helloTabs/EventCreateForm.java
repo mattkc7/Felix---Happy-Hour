@@ -19,7 +19,7 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-public class NewEventForms extends Activity { 
+public class EventCreateForm extends Activity { 
 	
 	String eventID = null;
 	EditText name=null;
@@ -135,7 +135,7 @@ public class NewEventForms extends Activity {
         Button save = (Button)findViewById(R.id.create_event);
         save.setOnClickListener(onSave);
         
-        eventID = getIntent().getStringExtra(NewEventForms.ID_EXTRA);
+        eventID = getIntent().getStringExtra(EventCreateForm.ID_EXTRA);
         
         if (eventID != null){
         	load();

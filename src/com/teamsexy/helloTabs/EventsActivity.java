@@ -38,8 +38,6 @@ public class EventsActivity extends ListActivity {
 		notifier = new SMSnotifier(this);
 		geomanager = new FelixGeofenceManager(this);
 		
-		geomanager.geoloqi();
-		
 		// Example use:
 		// notifier.sendSMS("5556", "giggity");
 		
@@ -88,7 +86,7 @@ public class EventsActivity extends ListActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.new_event) {
-			startActivity(new Intent(EventsActivity.this, NewEventForms.class));
+			startActivity(new Intent(EventsActivity.this, EventCreateForm.class));
 			return true;
 		} else if (item.getItemId() == R.id.settings){
 			Log.d("about to enter settingsactivity.java", "@@@");
