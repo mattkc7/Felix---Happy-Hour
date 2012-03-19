@@ -72,9 +72,10 @@ public class EventCreateForm extends Activity {
 				new AdapterView.OnItemSelectedListener() {
 					public void onItemSelected(AdapterView<?> parent, 
 							View view, int pos, long id) {
-
+						
+						selectedGroup = selectGroup.get(pos).getSpinnerText();
 						Toast.makeText(parent.getContext(),
-								selectGroup.get(pos).getValue() + " " + selectGroup.get(pos).getSpinnerText(),
+								"Invite " + selectGroup.get(pos).getSpinnerText(),
 								Toast.LENGTH_SHORT).show();
 					}
 
@@ -101,8 +102,9 @@ public class EventCreateForm extends Activity {
 					public void onItemSelected(AdapterView<?> parent, 
 							View view, int pos, long id) {
 
+						selectedSpot = selectSpot.get(pos).getSpinnerText();
 						Toast.makeText(parent.getContext(),
-								selectSpot.get(pos).getValue() + " " + selectSpot.get(pos).getSpinnerText(),
+								"Location: " + selectSpot.get(pos).getSpinnerText(),
 								Toast.LENGTH_SHORT).show();
 					}
 
@@ -255,11 +257,9 @@ public class EventCreateForm extends Activity {
 
 
 			if (eventID == null){
-				//helper.insert(name.getText().toString()); //, address.getText().toString(), type);
-
 				helper.insert(selectedSpot, selectedTime, selectedDate, selectedGroup);
 			} else {
-				helper.update(eventID, selectedSpot, selectedTime, selectedDate, selectedGroup); //, address.getText().toString(), type);
+				helper.update(eventID, selectedSpot, selectedTime, selectedDate, selectedGroup); 
 			}
 
 			finish();
