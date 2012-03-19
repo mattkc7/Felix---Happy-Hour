@@ -35,8 +35,6 @@ public class GroupHelper extends SQLiteOpenHelper {
 	public void insert(String name) {
 		ContentValues cv=new ContentValues();
 		cv.put("name", name); 
-//		cv.put("address", address); 
-//		cv.put("type", type); 
 		getWritableDatabase().insert("groups", "name", cv); 
 	}
 	
@@ -45,8 +43,6 @@ public class GroupHelper extends SQLiteOpenHelper {
 		String[] args = { id };
 
 		cv.put("name", name);
-//		cv.put("address", address);
-//		cv.put("type", type);
 
 		getWritableDatabase().update("groups", cv, "_ID=?", args);
 	}
@@ -58,14 +54,5 @@ public class GroupHelper extends SQLiteOpenHelper {
 	public String getName(Cursor c) { 
 		return(c.getString(1));
 	}
-	
-//	public String getAddress(Cursor c) {
-//		return(c.getString(2)); 
-//	}
-//	
-//	public String getType(Cursor c) { 
-//		return(c.getString(3));
-//	}
-	
 	
 }

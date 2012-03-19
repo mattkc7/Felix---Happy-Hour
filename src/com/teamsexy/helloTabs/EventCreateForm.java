@@ -20,62 +20,77 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class EventCreateForm extends Activity { 
-	
+
 	String eventID = null;
-	EditText name=null;
-	
-	EventsHelper helper=null;
-	
+	EditText name = null;
+
+	EventsHelper helper = null;
+	GroupHelper groupHelper = null;
+
 	public final static String ID_EXTRA="apt.tutorial._ID";
-	
+
 	//date picker
 	Button mPickDate;
 	int mYear;
 	int mMonth;
 	int mDay;
-	
+
 	//time picker
 	Button mPickTime;
 	int mHour;
 	int mMin;
-	
+
 	//variables to store the selected spot, time, date, and group
 	String selectedSpot, selectedTime, selectedDate, selectedGroup;
-	
+
 	static final int TIME_DIALOG_ID=1;
 	static final int DATE_DIALOG_ID=0;
-	
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mc_event_detail_form);
 		
-		//the spinner to select your group(s). How can we select multiple groups?
-		ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(
-				this, R.array.list_of_groups,
-				android.R.layout.simple_spinner_item);
-		adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// TODO Selecting multiple groups in spinner
 
-		Spinner s2 = (Spinner) findViewById(R.id.select_groups);
-		s2.setAdapter(adapter2);
-		s2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> adap, View v, int i, long lng) {
-				// do something here
-				Log.d("@..@@", adap.getItemAtPosition(i).toString());
-				selectedGroup = adap.getItemAtPosition(i).toString();
-				Toast.makeText(adap.getContext(),
-						adap.getItemAtPosition(i).toString(),
-						Toast.LENGTH_SHORT).show();
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// do something else
-			}
-		});
+		// Retrieve groups from database
+		groupHelper = new GroupHelper(this);
+		//Cursor cGroup = groupHelper.getAll();
+		//cGroup.close();
+		//cGroup.moveToFirst();
 		
+		Spinner groupSelectSpinner = (Spinner)findViewById(R.id.select_groups);
 		
+		final EventSpinnerContainer selectGroup[] = new EventSpinnerContainer[3];
+		selectGroup[0] = new EventSpinnerContainer( 1,"Group1" );
+		selectGroup[1] = new EventSpinnerContainer( 2,"Group2" );
+		selectGroup[2] = new EventSpinnerContainer( 3,"Group3" );
+		
+		ArrayAdapter<EventSpinnerContainer> groupAdapter =
+				new ArrayAdapter<EventSpinnerContainer>( 
+						this,
+						android.R.layout.simple_spinner_item,
+						selectGroup );
+		groupAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		
+		groupSelectSpinner.setAdapter(groupAdapter);
+		groupSelectSpinner.setOnItemSelectedListener(
+				new AdapterView.OnItemSelectedListener() {
+					public void onItemSelected(AdapterView<?> parent, 
+							View view, int pos, long id) {
+
+						EventSpinnerContainer d = selectGroup[pos];
+						Toast.makeText(parent.getContext(),
+								selectGroup[pos].getValue() + " " + selectGroup[pos].getSpinnerText(),
+								Toast.LENGTH_SHORT).show();
+					}
+
+					@Override
+					public void onNothingSelected(AdapterView<?> arg0) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
 		//spinner to select a SPOT
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.list_of_spots, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -83,7 +98,7 @@ public class EventCreateForm extends Activity {
 		Spinner s = (Spinner) findViewById(R.id.select_spot);
 		s.setAdapter(adapter);
 		s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-			 
+
 			@Override
 			public void onItemSelected(AdapterView<?> adap, View v, int i,
 					long lng) {
@@ -100,8 +115,8 @@ public class EventCreateForm extends Activity {
 				// do something else
 			}
 		});
-		
-		
+
+
 		//button to select time
 		mPickTime=(Button)findViewById(R.id.timePickerBtn);
 		mPickTime.setOnClickListener(new View.OnClickListener(){
@@ -112,7 +127,7 @@ public class EventCreateForm extends Activity {
 			}
 		});
 
-		
+
 		//button to select date
 		mPickDate = (Button)findViewById(R.id.datePickerBtn);
 		mPickDate.setOnClickListener(new View.OnClickListener(){
@@ -122,27 +137,26 @@ public class EventCreateForm extends Activity {
 				Log.d("@@@", "DONE: to show dialog");
 			}
 		});
-		
+
 		final Calendar c = Calendar.getInstance();
 		mYear = c.get(Calendar.YEAR);
 		mMonth = c.get(Calendar.MONTH);
 		mDay = c.get(Calendar.DAY_OF_MONTH);
 
-		
-		helper = new EventsHelper(this);
-        
 
-        Button save = (Button)findViewById(R.id.create_event);
-        save.setOnClickListener(onSave);
-        
-        eventID = getIntent().getStringExtra(EventCreateForm.ID_EXTRA);
-        
-        if (eventID != null){
-        	load();
-        }
+		helper = new EventsHelper(this);
+
+
+		Button save = (Button)findViewById(R.id.create_event);
+		save.setOnClickListener(onSave);
+
+		eventID = getIntent().getStringExtra(EventCreateForm.ID_EXTRA);
+
+		if (eventID != null){
+			load();
+		}
 	}
-	
-	
+
 	protected Dialog onCreateDialog(int id){
 		switch(id) {
 		case DATE_DIALOG_ID:
@@ -152,7 +166,7 @@ public class EventCreateForm extends Activity {
 		}
 		return null;
 	}
-	
+
 	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener(){
 		@Override
 		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -160,20 +174,20 @@ public class EventCreateForm extends Activity {
 			mYear = year;
 			mMonth = monthOfYear;
 			mDay = dayOfMonth;
-			
+
 			mPickDate.setText(new StringBuilder().append(mMonth+1).append("-").
 					append(mDay).append("-").append(mYear).append(" "));
 			selectedDate = (String) mPickDate.getText();
 		}
 	};
-	
+
 	private TimePickerDialog.OnTimeSetListener mTimeSetListener = new TimePickerDialog.OnTimeSetListener(){
 		@Override
 		public void onTimeSet(TimePicker view, int hour, int min) {
 			// TODO Auto-generated method stub
 			mHour = hour % 12;
 			mMin = min;
-			
+
 			String newMin = null;
 			if(mMin <=9){
 				newMin = Integer.toString(mMin);
@@ -181,47 +195,66 @@ public class EventCreateForm extends Activity {
 			} else {
 				newMin = Integer.toString(mMin);
 			}
-			
+
 			mPickTime.setText(new StringBuilder().append(mHour).append(":").append(newMin).append(" "));
 			selectedTime = (String)mPickTime.getText();
 		}
 	};
-	
+
 	public void onDestroy(){
 		super.onDestroy();
 		helper.close(); 
 	}
-	
-	private void load() {
-	    Cursor c=helper.getById(eventID);
 
-	    c.moveToFirst();    
-	    name.setText(helper.getSpot(c));
-//	    address.setText(helper.getAddress(c));
-//	    
-//	    if (helper.getType(c).equals("happy_hr")) {
-//	      types.check(R.id.happy_hr);
-//	    }
-//	    else {
-//	      types.check(R.id.my_spot);
-//	    }
-	    
-	    c.close();
-	  }
-	
+	private void load() {
+		Cursor c=helper.getById(eventID);
+
+		c.moveToFirst();    
+		name.setText(helper.getSpot(c));
+	}
+
 	private View.OnClickListener onSave = new View.OnClickListener() {
 		public void onClick(View v) {
 
-			
+
 			if (eventID == null){
 				//helper.insert(name.getText().toString()); //, address.getText().toString(), type);
-				
+
 				helper.insert(selectedSpot, selectedTime, selectedDate, selectedGroup);
 			} else {
 				helper.update(eventID, selectedSpot, selectedTime, selectedDate, selectedGroup); //, address.getText().toString(), type);
 			}
-			
+
 			finish();
 		}
 	};
+
+	/**
+	 * EventSpinnerContainer
+	 * 
+	 * Allows us to create an ArrayAdapter for a spinner without losing
+	 * database data. 
+	 */
+	class EventSpinnerContainer {
+
+		String spinnerText;
+		Integer value;
+
+		public EventSpinnerContainer ( Integer id, String display ) {
+			this.value = id;
+			this.spinnerText = display;
+		}
+
+		public String getSpinnerText() {
+			return spinnerText;
+		}
+
+		public Integer getValue() {
+			return value;
+		}
+
+		public String toString() {
+			return spinnerText;
+		}
+	}
 }

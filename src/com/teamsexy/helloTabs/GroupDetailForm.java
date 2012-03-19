@@ -13,7 +13,7 @@ import android.widget.EditText;
 public class GroupDetailForm extends Activity { 
 	
 	String spotId = null;
-	EditText name=null;
+	EditText name = null;
 	
 	GroupHelper helper=null;
 	
@@ -21,12 +21,9 @@ public class GroupDetailForm extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.group_detail_form);
 		
-		
 		helper = new GroupHelper(this);
         
         name=(EditText)findViewById(R.id.name); 
-//        address=(EditText)findViewById(R.id.addr); 
-//        types=(RadioGroup)findViewById(R.id.types);
         
         Button save = (Button)findViewById(R.id.save);
         save.setOnClickListener(onSave);
@@ -50,31 +47,12 @@ public class GroupDetailForm extends Activity {
 
 	    c.moveToFirst();    
 	    name.setText(helper.getName(c));
-//	    address.setText(helper.getAddress(c));
-//	    
-//	    if (helper.getType(c).equals("happy_hr")) {
-//	      types.check(R.id.happy_hr);
-//	    }
-//	    else {
-//	      types.check(R.id.my_spot);
-//	    }
 	    
 	    c.close();
 	  }
 	
 	private View.OnClickListener onSave = new View.OnClickListener() {
 		public void onClick(View v) {
-
-//			String type = null;
-//
-//			switch (types.getCheckedRadioButtonId()) {
-//			case R.id.happy_hr:
-//				type ="happy_hr";
-//				break;
-//			case R.id.my_spot:
-//				type ="my_spot";
-//				break;
-//			}
 			
 			if (spotId == null){
 				helper.insert(name.getText().toString()); //, address.getText().toString(), type);
