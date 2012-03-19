@@ -1,5 +1,6 @@
 package com.teamsexy.helloTabs;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.app.Activity;
@@ -58,7 +59,7 @@ public class EventCreateForm extends Activity {
 		// Spinner to select a group
 		// TODO Selecting multiple groups in spinner
 		Spinner groupSelectSpinner = (Spinner)findViewById(R.id.select_groups);
-		final EventSpinnerContainer selectGroup[] = buildGroupSpinner();
+		final ArrayList<EventSpinnerContainer> selectGroup = buildGroupSpinner();
 		ArrayAdapter<EventSpinnerContainer> groupAdapter =
 				new ArrayAdapter<EventSpinnerContainer>( 
 						this,
@@ -72,9 +73,9 @@ public class EventCreateForm extends Activity {
 					public void onItemSelected(AdapterView<?> parent, 
 							View view, int pos, long id) {
 
-						EventSpinnerContainer d = selectGroup[pos];
+						EventSpinnerContainer d = selectGroup.get(pos);
 						Toast.makeText(parent.getContext(),
-								selectGroup[pos].getValue() + " " + selectGroup[pos].getSpinnerText(),
+								selectGroup.get(pos).getValue() + " " + selectGroup.get(pos).getSpinnerText(),
 								Toast.LENGTH_SHORT).show();
 					}
 
@@ -87,7 +88,7 @@ public class EventCreateForm extends Activity {
 
 		// Spinner to select a spot
 		Spinner spotSelectSpinner = (Spinner)findViewById(R.id.select_spot);
-		final EventSpinnerContainer selectSpot[] = buildSpotSpinner();
+		final ArrayList<EventSpinnerContainer> selectSpot = buildSpotSpinner();
 		ArrayAdapter<EventSpinnerContainer> spotAdapter =
 				new ArrayAdapter<EventSpinnerContainer>( 
 						this,
@@ -101,9 +102,9 @@ public class EventCreateForm extends Activity {
 					public void onItemSelected(AdapterView<?> parent, 
 							View view, int pos, long id) {
 
-						EventSpinnerContainer d = selectSpot[pos];
+						EventSpinnerContainer d = selectSpot.get(pos);
 						Toast.makeText(parent.getContext(),
-								selectSpot[pos].getValue() + " " + selectSpot[pos].getSpinnerText(),
+								selectSpot.get(pos).getValue() + " " + selectSpot.get(pos).getSpinnerText(),
 								Toast.LENGTH_SHORT).show();
 					}
 
@@ -158,19 +159,40 @@ public class EventCreateForm extends Activity {
 		}
 	}
 
-	private EventSpinnerContainer[] buildGroupSpinner () {
-		EventSpinnerContainer[] groups = new EventSpinnerContainer[3];
-		groups[0] = new EventSpinnerContainer( 1,"Group1" );
-		groups[1] = new EventSpinnerContainer( 2,"Group2" );
-		groups[2] = new EventSpinnerContainer( 3,"Group3" );
+	private ArrayList<EventSpinnerContainer> buildGroupSpinner () {
+		// Initialize list of groups with a TBD group
+		ArrayList<EventSpinnerContainer> groups = new ArrayList<EventSpinnerContainer>();
+		groups.add(new EventSpinnerContainer( -1, "TBD"));
+		
+		// Add all existing groups in database to list of groups for spinner
+		Cursor g = groupHelper.getAll();
+		g.moveToFirst();
+        while (g.isAfterLast() == false) {
+        	groups.add(new EventSpinnerContainer( 
+        			g.getInt(0), g.getString(1))); 
+        	
+       	    g.moveToNext();
+        }
+        g.close();
+		
 		return groups;
 	}
 	
-	private EventSpinnerContainer[] buildSpotSpinner () {
-		EventSpinnerContainer[] spots = new EventSpinnerContainer[3];
-		spots[0] = new EventSpinnerContainer( 1,"S1" );
-		spots[1] = new EventSpinnerContainer( 2,"S2" );
-		spots[2] = new EventSpinnerContainer( 3,"S3" );
+	private ArrayList<EventSpinnerContainer> buildSpotSpinner () {
+		// Initialize list of spots with a TBD group
+		ArrayList<EventSpinnerContainer> spots = new ArrayList<EventSpinnerContainer>();
+		spots.add(new EventSpinnerContainer( -1, "TBD"));
+		
+		// Add all existing spots in database to list of spots for spinner
+		Cursor s = spotHelper.getAll();
+		s.moveToFirst();
+		while (s.isAfterLast() == false) {
+			spots.add(new EventSpinnerContainer(
+					s.getInt(0), s.getString(1)));
+			s.moveToNext();
+		}
+		s.close();
+		
 		return spots;
 	}
 	
