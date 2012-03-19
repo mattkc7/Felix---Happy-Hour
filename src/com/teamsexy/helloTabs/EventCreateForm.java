@@ -73,7 +73,6 @@ public class EventCreateForm extends Activity {
 					public void onItemSelected(AdapterView<?> parent, 
 							View view, int pos, long id) {
 
-						EventSpinnerContainer d = selectGroup.get(pos);
 						Toast.makeText(parent.getContext(),
 								selectGroup.get(pos).getValue() + " " + selectGroup.get(pos).getSpinnerText(),
 								Toast.LENGTH_SHORT).show();
@@ -102,7 +101,6 @@ public class EventCreateForm extends Activity {
 					public void onItemSelected(AdapterView<?> parent, 
 							View view, int pos, long id) {
 
-						EventSpinnerContainer d = selectSpot.get(pos);
 						Toast.makeText(parent.getContext(),
 								selectSpot.get(pos).getValue() + " " + selectSpot.get(pos).getSpinnerText(),
 								Toast.LENGTH_SHORT).show();
