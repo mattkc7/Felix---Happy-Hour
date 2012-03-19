@@ -26,6 +26,7 @@ public class EventCreateForm extends Activity {
 
 	EventsHelper helper = null;
 	GroupHelper groupHelper = null;
+	SpotHelper spotHelper = null;
 
 	public final static String ID_EXTRA="apt.tutorial._ID";
 
@@ -50,21 +51,14 @@ public class EventCreateForm extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mc_event_detail_form);
 		
-		// TODO Selecting multiple groups in spinner
-
-		// Retrieve groups from database
+		// Initialize database helpers
 		groupHelper = new GroupHelper(this);
-		//Cursor cGroup = groupHelper.getAll();
-		//cGroup.close();
-		//cGroup.moveToFirst();
+		spotHelper = new SpotHelper(this);
 		
+		// Spinner to select a group
+		// TODO Selecting multiple groups in spinner
 		Spinner groupSelectSpinner = (Spinner)findViewById(R.id.select_groups);
-		
-		final EventSpinnerContainer selectGroup[] = new EventSpinnerContainer[3];
-		selectGroup[0] = new EventSpinnerContainer( 1,"Group1" );
-		selectGroup[1] = new EventSpinnerContainer( 2,"Group2" );
-		selectGroup[2] = new EventSpinnerContainer( 3,"Group3" );
-		
+		final EventSpinnerContainer selectGroup[] = buildGroupSpinner();
 		ArrayAdapter<EventSpinnerContainer> groupAdapter =
 				new ArrayAdapter<EventSpinnerContainer>( 
 						this,
@@ -91,31 +85,38 @@ public class EventCreateForm extends Activity {
 					}
 				});
 
+		// Spinner to select a spot
+		Spinner spotSelectSpinner = (Spinner)findViewById(R.id.select_spot);
+		final EventSpinnerContainer selectSpot[] = buildSpotSpinner();
+		ArrayAdapter<EventSpinnerContainer> spotAdapter =
+				new ArrayAdapter<EventSpinnerContainer>( 
+						this,
+						android.R.layout.simple_spinner_item,
+						selectSpot );
+		spotAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		
+		spotSelectSpinner.setAdapter(spotAdapter);
+		spotSelectSpinner.setOnItemSelectedListener(
+				new AdapterView.OnItemSelectedListener() {
+					public void onItemSelected(AdapterView<?> parent, 
+							View view, int pos, long id) {
+
+						EventSpinnerContainer d = selectSpot[pos];
+						Toast.makeText(parent.getContext(),
+								selectSpot[pos].getValue() + " " + selectSpot[pos].getSpinnerText(),
+								Toast.LENGTH_SHORT).show();
+					}
+
+					@Override
+					public void onNothingSelected(AdapterView<?> arg0) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+		
 		//spinner to select a SPOT
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.list_of_spots, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-		Spinner s = (Spinner) findViewById(R.id.select_spot);
-		s.setAdapter(adapter);
-		s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-
-			@Override
-			public void onItemSelected(AdapterView<?> adap, View v, int i,
-					long lng) {
-				// do something here
-				Log.d("@@@", adap.getItemAtPosition(i).toString());
-				selectedSpot = adap.getItemAtPosition(i).toString();
-				Toast.makeText(adap.getContext(),
-						adap.getItemAtPosition(i).toString(),
-						Toast.LENGTH_SHORT).show();
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// do something else
-			}
-		});
-
 
 		//button to select time
 		mPickTime=(Button)findViewById(R.id.timePickerBtn);
@@ -157,6 +158,22 @@ public class EventCreateForm extends Activity {
 		}
 	}
 
+	private EventSpinnerContainer[] buildGroupSpinner () {
+		EventSpinnerContainer[] groups = new EventSpinnerContainer[3];
+		groups[0] = new EventSpinnerContainer( 1,"Group1" );
+		groups[1] = new EventSpinnerContainer( 2,"Group2" );
+		groups[2] = new EventSpinnerContainer( 3,"Group3" );
+		return groups;
+	}
+	
+	private EventSpinnerContainer[] buildSpotSpinner () {
+		EventSpinnerContainer[] spots = new EventSpinnerContainer[3];
+		spots[0] = new EventSpinnerContainer( 1,"S1" );
+		spots[1] = new EventSpinnerContainer( 2,"S2" );
+		spots[2] = new EventSpinnerContainer( 3,"S3" );
+		return spots;
+	}
+	
 	protected Dialog onCreateDialog(int id){
 		switch(id) {
 		case DATE_DIALOG_ID:
