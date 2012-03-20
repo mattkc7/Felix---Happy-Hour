@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class GroupsActivity extends ListActivity {
@@ -69,6 +70,7 @@ public class GroupsActivity extends ListActivity {
 
 	  @Override
 	public void onListItemClick(ListView list, View view, int position, long id) {
+		
 		Intent i = new Intent(GroupsActivity.this, GroupMembersView.class);
 
 		i.putExtra(ID_EXTRA, String.valueOf(id));

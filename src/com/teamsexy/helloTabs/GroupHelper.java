@@ -28,14 +28,16 @@ public class GroupHelper extends SQLiteOpenHelper {
 	    String[] args={id};
 
 	    return(getReadableDatabase()
-	            .rawQuery("SELECT _id, name FROM groups WHERE _ID=?",
+	            .rawQuery("SELECT _id, name FROM groups WHERE _id=?",
 	                      args));
 	  }
 	
-	public void insert(String name) {
+	public long insert(String name) {
 		ContentValues cv=new ContentValues();
 		cv.put("name", name); 
-		getWritableDatabase().insert("groups", "name", cv); 
+		long groupId = getWritableDatabase().insert("groups", "name", cv);
+		
+		return groupId;
 	}
 	
 	public void update(String id, String name) {
@@ -44,7 +46,7 @@ public class GroupHelper extends SQLiteOpenHelper {
 
 		cv.put("name", name);
 
-		getWritableDatabase().update("groups", cv, "_ID=?", args);
+		getWritableDatabase().update("groups", cv, "_id=?", args);
 	}
 	
 	public Cursor getAll() { 
