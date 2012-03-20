@@ -84,7 +84,8 @@ public class GroupDetailForm extends Activity {
 	        if (c.moveToFirst()) {
 	          String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
 	          
-	          // TODO STUFF with contacts
+	          System.out.println(name);
+	        
 	        }
 	      }
 	      break;
