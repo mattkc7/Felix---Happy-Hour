@@ -1,7 +1,6 @@
 package com.teamsexy.helloTabs;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -14,7 +13,6 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class GroupDetailForm extends Activity { 
 

@@ -3,7 +3,6 @@ package com.teamsexy.helloTabs;
 import java.util.ArrayList;
 
 import android.app.ListActivity;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;

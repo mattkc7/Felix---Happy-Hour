@@ -6,13 +6,12 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 public class GroupEditActivity extends Activity {
 	
-	private FelixDbAdapter groupDbHelper;
-	private ListView groupeditview;
+	//private FelixDbAdapter groupDbHelper;
+	//private ListView groupeditview;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

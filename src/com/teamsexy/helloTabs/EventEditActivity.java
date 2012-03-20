@@ -13,7 +13,6 @@ import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -21,8 +20,8 @@ import android.widget.Toast;
 public class EventEditActivity extends Activity {
 
 	// Data management
-	private FelixDbAdapter eventDbHelper;
-	private ListView eventeditview;
+	//private FelixDbAdapter eventDbHelper;
+	//private ListView eventeditview;
 	
 	// Date Input
 	private TextView dateDisplay;

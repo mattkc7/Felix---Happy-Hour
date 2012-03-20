@@ -6,13 +6,12 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 public class SpotEditActivity extends Activity {
 
-	private FelixDbAdapter spotDbHelper;
-	private ListView spoteditview;
+	//private FelixDbAdapter spotDbHelper;
+	//private ListView spoteditview;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
