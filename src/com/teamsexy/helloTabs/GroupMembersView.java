@@ -2,7 +2,9 @@ package com.teamsexy.helloTabs;
 
 import java.util.ArrayList;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,11 +57,13 @@ public class GroupMembersView extends ListActivity {
 	}
 	
 	public boolean onContextItemSelected(MenuItem item) {
-	      //AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+//	      AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 	      //String[] names = getResources().getStringArray(R.array.names);
 	      switch(item.getItemId()) {
 	      case R.id.delete:
 	    	  //REALLY DELETE MEMBER
+	    	  //How do we pass in which member to delete...?
+	    	  reallyDeleteMember(item);
 	            Toast.makeText(this, "Group member deleted =[",
 	                        Toast.LENGTH_SHORT).show();
 	            return true;
@@ -70,6 +74,30 @@ public class GroupMembersView extends ListActivity {
 	            return super.onContextItemSelected(item);
 	      }
 	}
+	
+	public void reallyDeleteMember(MenuItem item){
+		
+		
+			new AlertDialog.Builder(this)
+	        .setTitle( "Delete" )
+	        .setMessage( "This member will be deleted." )
+	        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+	            public void onClick(DialogInterface arg0, int arg1) {
+	                //DELETE MEMBER HERE. 
+	            	//helper.delete(...);
+
+	            	
+	                finish();
+	            }
+	        })
+	        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+	            public void onClick(DialogInterface arg0, int arg1) {
+	                //do nothing onclick of CANCEL
+	                
+	            }
+	        }).setIcon(R.drawable.warning).show();
+	}
+	
 	
 	//menu options to ADD a new member
 	public boolean onCreateOptionsMenu(Menu menu) {
