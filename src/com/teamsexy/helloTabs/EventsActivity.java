@@ -144,9 +144,6 @@ public class EventsActivity extends ListActivity {
 
 		void populateFrom(Cursor c, EventsHelper helper) {
 			String myBuffer = helper.getSpot(c) + " @ " + helper.getTime(c);
-			//Random hour = new Random();
-			//int hr = hour.nextInt(7) + 1;
-			//myBuffer = myBuffer + " @ " + "5:05pm";
 			
 			icon.setImageResource(R.drawable.yellow_flag);
 			spotTime.setText(myBuffer);
@@ -159,10 +156,6 @@ public class EventsActivity extends ListActivity {
 			final Calendar cc = Calendar.getInstance();
 			int mMonth = cc.get(Calendar.MONTH)+1;
 			int mDay = cc.get(Calendar.DAY_OF_MONTH);
-			Log.d("@@@", String.valueOf(mMonth));
-			Log.d("@@@", String.valueOf(mDay));
-			Log.d("--", String.valueOf(m));
-			Log.d("--", String.valueOf(d));
 			
 			//check if the event is in the past & delete it
 			if(eventMonthIsOver(m, mMonth) && eventDayIsOver(d, mDay)){

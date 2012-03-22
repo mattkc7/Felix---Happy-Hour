@@ -3,13 +3,22 @@ package com.teamsexy.helloTabs;
 import java.util.ArrayList;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GroupMembersView extends ListActivity {
 
@@ -31,8 +40,53 @@ public class GroupMembersView extends ListActivity {
 		
 		fetchGroupMembers();
 		setListAdapter(new IconicAdapter());
+		
+		registerForContextMenu(getListView());
 	}
 
+	/*
+	 * ==Context Menu tutorial==
+	 * http://saigeethamn.blogspot.com/2011/05/context-menu-android-developer-tutorial.html
+	 */
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo){
+		super.onCreateContextMenu(menu, v, menuInfo);
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.contextmenu_for_grp_mmbrs, menu);
+	}
+	
+	public boolean onContextItemSelected(MenuItem item) {
+	      //AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+	      //String[] names = getResources().getStringArray(R.array.names);
+	      switch(item.getItemId()) {
+	      case R.id.delete:
+	    	  //REALLY DELETE MEMBER
+	            Toast.makeText(this, "Group member deleted =[",
+	                        Toast.LENGTH_SHORT).show();
+	            return true;
+	      case R.id.ringWraiths:
+	    	  Toast.makeText(this, "Group member destroyed >=]",
+                      Toast.LENGTH_SHORT).show();
+	      default:
+	            return super.onContextItemSelected(item);
+	      }
+	}
+	
+	//menu options to ADD a new member
+	public boolean onCreateOptionsMenu(Menu menu) {
+		new MenuInflater(this).inflate(R.menu.grp_mmber_options, menu);
+		return (super.onCreateOptionsMenu(menu));
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		if (item.getItemId() == R.id.add_contact) {
+			//add new member by going into the contacts menu
+			return true;
+		}
+		return (super.onOptionsItemSelected(item));
+	}
+	
 	public void onListItemClick(ListView parent, View v,
 			int position, long id) {
 		
