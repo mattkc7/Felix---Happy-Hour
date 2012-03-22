@@ -151,8 +151,10 @@ public class EventsActivity extends ListActivity {
 			icon.setImageResource(R.drawable.yellow_flag);
 			spotTime.setText(myBuffer);
 			
-			m = parseMonth(helper.getDate(c));
-			d = parseDay(helper.getDate(c));
+			if(helper.getDate(c) != null){
+				m = parseMonth(helper.getDate(c));
+				d = parseDay(helper.getDate(c));
+			}
 			
 			final Calendar cc = Calendar.getInstance();
 			int mMonth = cc.get(Calendar.MONTH)+1;
@@ -162,6 +164,12 @@ public class EventsActivity extends ListActivity {
 			Log.d("--", String.valueOf(m));
 			Log.d("--", String.valueOf(d));
 			
+			//check if the event is in the past & delete it
+			if(eventMonthIsOver(m, mMonth) && eventDayIsOver(d, mDay)){
+				//helper.delete(..., time, date, group);
+			}
+			
+			//if the event is TODAY, mark it with a RED FLAG. Future events will be YELLOW_Flags
 			if ((m == mMonth) && (d == mDay)){
 				icon.setImageResource(R.drawable.red_flag);
 			}
@@ -169,6 +177,14 @@ public class EventsActivity extends ListActivity {
 			groupDate.setText(myBuffer);
 			
 			
+		}
+		
+		public boolean eventMonthIsOver(int eventM, int currentM){
+			return eventM <= currentM;
+		}
+		
+		public boolean eventDayIsOver(int eventD, int currentD){
+			return eventD < currentD;
 		}
 		
 		public static int parseMonth(String s){

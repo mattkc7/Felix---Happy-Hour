@@ -1,12 +1,19 @@
 package com.teamsexy.helloTabs;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 public class DetailForm extends Activity { 
 	
@@ -82,4 +89,39 @@ public class DetailForm extends Activity {
 			finish();
 		}
 	};
+	
+	public boolean onCreateOptionsMenu(Menu menu) {
+		new MenuInflater(this).inflate(R.menu.spot_edit_options, menu); //previously option
+		return (super.onCreateOptionsMenu(menu));
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.delete_spot) {
+			//startActivity(new Intent(SpotsActivity.this, DetailForm.class));
+			reallyDeleteSpot();
+			return true;
+		}
+		return (super.onOptionsItemSelected(item));
+	}
+	
+	public void reallyDeleteSpot(){
+		new AlertDialog.Builder(this)
+        .setTitle( "Delete" )
+        .setMessage( "This spot will be deleted." )
+        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                //DELETE SPOT HERE. 
+            	//Inside SpotHelper.java, there is a delete method
+            	//helper.delete(...);
+            	Toast.makeText(getBaseContext(), "Spot deleted", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        })
+        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                //do nothing onclick of CANCEL
+                Toast.makeText(getBaseContext(), "You touched CANCEL", Toast.LENGTH_SHORT).show();
+            }
+        }).setIcon(R.drawable.warning).show();
+	}
 }

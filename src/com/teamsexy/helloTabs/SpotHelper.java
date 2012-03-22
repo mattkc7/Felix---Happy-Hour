@@ -51,6 +51,18 @@ public class SpotHelper extends SQLiteOpenHelper {
 		getWritableDatabase().update("spots", cv, "_ID=?", args);
 	}
 	
+	/*DELETING A SPOT */
+	public void delete(String id, String name, String address, String type) {
+		ContentValues cv = new ContentValues();
+		String[] args = { id };
+
+		cv.put("name", name);
+		cv.put("address", address);
+		cv.put("type", type);
+
+		//getWritableDatabase().update("spots", cv, "_ID=?", args);
+	}
+	
 	public Cursor getAll() { 
 		return(getReadableDatabase().rawQuery("SELECT _id, name, address, type FROM spots ORDER BY name", null));
 	}

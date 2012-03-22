@@ -43,6 +43,15 @@ public class EventsHelper extends SQLiteOpenHelper {
 		getWritableDatabase().insert("events", "chosenSpot", cv); 
 	}
 	
+	public void delete(String spot, String time, String date, String group) {
+		ContentValues cv=new ContentValues();
+		cv.put("chosenSpot", spot); 
+		cv.put("chosenTime", time); 
+		cv.put("chosenDate", date); 
+		cv.put("chosenGroup", group); 
+		//getWritableDatabase().insert("events", "chosenSpot", cv); 
+	}
+	
 	public void update(String id, String spot, String time, String date, String group) {
 		ContentValues cv = new ContentValues();
 		String[] args = { id };

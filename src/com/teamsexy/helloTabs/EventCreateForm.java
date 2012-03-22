@@ -144,7 +144,9 @@ public class EventCreateForm extends Activity {
 		mYear = c.get(Calendar.YEAR);
 		mMonth = c.get(Calendar.MONTH);
 		mDay = c.get(Calendar.DAY_OF_MONTH);
-
+		
+		//set the default date to today
+		selectedDate = String.valueOf(mMonth+1) + "/" + String.valueOf(mDay);
 
 		helper = new EventsHelper(this);
 
