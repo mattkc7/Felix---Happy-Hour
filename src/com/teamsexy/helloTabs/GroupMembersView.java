@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -16,7 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -38,8 +35,6 @@ public class GroupMembersView extends ListActivity {
 		groupId = getIntent().getStringExtra(GroupsActivity.ID_EXTRA);
 		memberHelper = new GroupMemberHelper(this);
 		members = new ArrayList<String>();
-		members.add("Test 1");
-		members.add("Test 2");
 		
 		fetchGroupMembers();
 		setListAdapter(new IconicAdapter());

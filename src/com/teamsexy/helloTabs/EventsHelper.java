@@ -43,13 +43,8 @@ public class EventsHelper extends SQLiteOpenHelper {
 		getWritableDatabase().insert("events", "chosenSpot", cv); 
 	}
 	
-	public void delete(String spot, String time, String date, String group) {
-		ContentValues cv=new ContentValues();
-		cv.put("chosenSpot", spot); 
-		cv.put("chosenTime", time); 
-		cv.put("chosenDate", date); 
-		cv.put("chosenGroup", group); 
-		//getWritableDatabase().insert("events", "chosenSpot", cv); 
+	public int delete(String id) {
+		return getWritableDatabase().delete("events", "_id=" + id, null);
 	}
 	
 	public void update(String id, String spot, String time, String date, String group) {
@@ -66,6 +61,10 @@ public class EventsHelper extends SQLiteOpenHelper {
 	
 	public Cursor getAll() { 
 		return(getReadableDatabase().rawQuery("SELECT * FROM events ORDER BY chosenSpot", null));
+	}
+	
+	public String getEventId(Cursor c) {
+		return(c.getString(0));
 	}
 	
 	public String getSpot(Cursor c) { 

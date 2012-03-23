@@ -38,9 +38,6 @@ public class EventsActivity extends ListActivity {
 		notifier = new SMSnotifier(this);
 		geomanager = new FelixGeofenceManager(this);
 		
-		// Example use:
-		// notifier.sendSMS("5556", "giggity");
-		
 		helper= new EventsHelper(this);
         model=helper.getAll();
         startManagingCursor(model);
@@ -143,11 +140,7 @@ public class EventsActivity extends ListActivity {
 		}
 
 		void populateFrom(Cursor c, EventsHelper helper) {
-			String myBuffer = helper.getSpot(c) + " @ " + helper.getTime(c);
-			
-			icon.setImageResource(R.drawable.yellow_flag);
-			spotTime.setText(myBuffer);
-			
+					
 			if(helper.getDate(c) != null){
 				m = parseMonth(helper.getDate(c));
 				d = parseDay(helper.getDate(c));
@@ -159,16 +152,23 @@ public class EventsActivity extends ListActivity {
 			
 			//check if the event is in the past & delete it
 			if(eventMonthIsOver(m, mMonth) && eventDayIsOver(d, mDay)){
-				//helper.delete(..., time, date, group);
+				String toDelete = helper.getEventId(c);
+				helper.delete(toDelete);
+			} 
+			else 
+			{
+				String myBuffer = helper.getSpot(c) + " @ " + helper.getTime(c);
+				
+				icon.setImageResource(R.drawable.yellow_flag);
+				spotTime.setText(myBuffer);
+				
+				//if the event is TODAY, mark it with a RED FLAG. Future events will be YELLOW_Flags
+				if ((m == mMonth) && (d == mDay)){
+					icon.setImageResource(R.drawable.red_flag);
+				}
+				myBuffer = helper.getGroup(c) + " - " + String.valueOf(m)+"/"+String.valueOf(d);//helper.getDate(c);
+				groupDate.setText(myBuffer);
 			}
-			
-			//if the event is TODAY, mark it with a RED FLAG. Future events will be YELLOW_Flags
-			if ((m == mMonth) && (d == mDay)){
-				icon.setImageResource(R.drawable.red_flag);
-			}
-			myBuffer = helper.getGroup(c) + " - " + String.valueOf(m)+"/"+String.valueOf(d);//helper.getDate(c);
-			groupDate.setText(myBuffer);
-			
 			
 		}
 		
