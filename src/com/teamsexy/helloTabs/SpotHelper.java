@@ -10,7 +10,6 @@ public class SpotHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "spotslist.db";
 	private static final int SCHEMA_VERSION = 1;
 	
-	
 	public SpotHelper(Context context) {
 		super(context, DATABASE_NAME, null, SCHEMA_VERSION);
 	}
@@ -52,15 +51,10 @@ public class SpotHelper extends SQLiteOpenHelper {
 	}
 	
 	/*DELETING A SPOT */
-	public void delete(String id, String name, String address, String type) {
-		ContentValues cv = new ContentValues();
-		String[] args = { id };
-
-		cv.put("name", name);
-		cv.put("address", address);
-		cv.put("type", type);
-
-		//getWritableDatabase().update("spots", cv, "_ID=?", args);
+	public int delete(String id) {
+		
+		return getWritableDatabase().delete("spots", "_id =" + id, null);
+		
 	}
 	
 	public Cursor getAll() { 

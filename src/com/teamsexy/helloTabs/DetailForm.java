@@ -110,9 +110,9 @@ public class DetailForm extends Activity {
         .setMessage( "This spot will be deleted." )
         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
-                //DELETE SPOT HERE. 
-            	//Inside SpotHelper.java, there is a delete method
-            	//helper.delete(...);
+            	
+            	helper.delete(spotId);
+         
             	Toast.makeText(getBaseContext(), "Spot deleted", Toast.LENGTH_SHORT).show();
                 finish();
             }
