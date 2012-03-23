@@ -10,9 +10,6 @@ import android.widget.Toast;
 
 public class SpotEditActivity extends Activity {
 
-	//private FelixDbAdapter spotDbHelper;
-	//private ListView spoteditview;
-	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.spoteditform);
