@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -27,14 +28,14 @@ public class GroupMembersView extends ListActivity {
 	TextView selection;
 	ArrayList<String> members;
 	GroupMemberHelper memberHelper;
-	Long groupId;
+	String groupId;
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		setContentView(R.layout.group_memberslist);
 		
-		groupId = getIntent().getLongExtra(GroupsActivity.ID_EXTRA, -1L);
+		groupId = getIntent().getStringExtra(GroupsActivity.ID_EXTRA);
 		memberHelper = new GroupMemberHelper(this);
 		members = new ArrayList<String>();
 		members.add("Test 1");
@@ -110,6 +111,9 @@ public class GroupMembersView extends ListActivity {
 
 		if (item.getItemId() == R.id.add_contact) {
 			//add new member by going into the contacts menu
+			
+			Toast.makeText(GroupMembersView.this, "Getting a contact", Toast.LENGTH_SHORT).show();
+			
 			return true;
 		}
 		return (super.onOptionsItemSelected(item));
@@ -117,27 +121,40 @@ public class GroupMembersView extends ListActivity {
 	
 	public void onListItemClick(ListView parent, View v,
 			int position, long id) {
-		
-		selection.setText(members.get(position));
+		Toast.makeText(GroupMembersView.this, "IN PROGRESS", Toast.LENGTH_SHORT).show();
+		//selection.setText(members.get(position));
 	}
 	
 	private void fetchGroupMembers () {
-		/*if (groupId != -1L) {
-			Cursor c = memberHelper.getContactsByGroupId(groupId.toString());
-			c.moveToFirst();
-			while (c.isAfterLast() == false) {
-				
-				// TODO members need IDs to be removable from group - 
-				// need to create a MemberEntry class for this
-				
-				members.add(c.getString(1));
-				
-				c.moveToNext();
-			}
-			
-			c.close();
-		}*/
 		
+		Cursor c = memberHelper.getContactsByGroupId(groupId);
+		c.moveToFirst();
+		while (c.isAfterLast() == false) {
+				
+			members.add(c.getString(1));
+			c.moveToNext();
+		}
+			
+		c.close();		
+	}
+	
+	class GroupMemberContainer {
+		
+		String displayName;
+		String memberId;
+		
+		public GroupMemberContainer (String i, String n) {
+			this.memberId = n;
+			this.displayName = n;
+		}
+		
+		public String getName () {
+			return displayName;
+		}
+		
+		public String getId () {
+			return memberId;
+		}
 	}
 
 	class IconicAdapter extends ArrayAdapter<String> {

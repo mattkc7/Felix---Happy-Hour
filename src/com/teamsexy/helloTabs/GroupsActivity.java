@@ -73,7 +73,6 @@ public class GroupsActivity extends ListActivity {
 		Intent i = new Intent(GroupsActivity.this, GroupMembersView.class);
 
 		i.putExtra(ID_EXTRA, String.valueOf(id));
-		System.out.println("about to start intent");
 		startActivity(i);
 	}
 	  
