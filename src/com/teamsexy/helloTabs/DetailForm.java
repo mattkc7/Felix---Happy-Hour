@@ -3,9 +3,9 @@ package com.teamsexy.helloTabs;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,6 +23,8 @@ public class DetailForm extends Activity {
 	RadioGroup types=null;
 	SpotHelper helper=null;
 	
+	// Location Management
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detail_form);
@@ -37,11 +39,15 @@ public class DetailForm extends Activity {
         Button save = (Button)findViewById(R.id.save);
         save.setOnClickListener(onSave);
         
+        Button findOnMap = (Button)findViewById(R.id.findOnMap);
+        findOnMap.setOnClickListener(onMapFinder);
+        
         spotId = getIntent().getStringExtra(SpotsActivity.ID_EXTRA);
         
         if (spotId != null){
         	load();
         }
+        
 	}
 	
 	public void onDestroy(){
@@ -87,6 +93,15 @@ public class DetailForm extends Activity {
 			}
 			
 			finish();
+		}
+	};
+	
+	private View.OnClickListener onMapFinder = new View.OnClickListener() {
+		public void onClick(View v) {
+			
+			Intent i = new Intent(DetailForm.this, FelixMapActivity.class);
+			startActivity(i);
+			
 		}
 	};
 	

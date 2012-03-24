@@ -17,6 +17,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -52,8 +53,6 @@ public class FelixGeofenceManager implements LocationListener {
 	public FelixGeofenceManager (Context ctx) {
 		this.context = ctx;
 		
-		Toast.makeText(context, "Searching for receiver....", Toast.LENGTH_LONG).show();
-		
 		// Location
 		locationManager = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
 		provider = locationManager.GPS_PROVIDER;
@@ -72,7 +71,6 @@ public class FelixGeofenceManager implements LocationListener {
 		intent.putExtra(LQService.EXTRA_SDK_SECRET, Constants.LQ_SDK_SECRET);
 		//intent.putExtra(LQService.EXTRA_C2DM_SENDER, Constants.LQ_C2DM_SENDER);
 		context.startService(intent);
-		
 	}
 	
 	public void onLocationChanged (Location location) {

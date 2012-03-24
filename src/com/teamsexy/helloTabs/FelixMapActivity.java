@@ -11,6 +11,7 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
+import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.OverlayItem;
 
 /**
@@ -27,31 +28,35 @@ public class FelixMapActivity extends MapActivity {
 	private MapView mapView;
 	private LocationManager locationManager;
 	private FelixOverlay itemizedoverlay;
-	private GeoPoint homebase;
+	private MyLocationOverlay myLocationOverlay;
+	//private GeoPoint homebase = new GeoPoint(34, -118);
 	
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
-		// Commented out to avoid merge conflict.
-		//setContentView(R.layout.map_main);
-
-		// Initialize map view
+		setContentView(R.layout.map_main); // bind the layout to the activity
+		
+		// Configure the Map
 		mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
-		
-		// Set home base in Irvine
-		homebase = new GeoPoint(34, -118);
-		
-		// Overhead view
 		mapView.setSatellite(true);
 		mapController = mapView.getController();
-		mapController.setZoom(14);
-		
+		mapController.setZoom(14); // Zoon 1 is world view
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
 				0, new GeoUpdateHandler());
 
-		Drawable drawable = this.getResources().getDrawable(R.drawable.happy_hr_spot);
-		itemizedoverlay = new FelixOverlay(drawable);
+		myLocationOverlay = new MyLocationOverlay(this, mapView);
+		mapView.getOverlays().add(myLocationOverlay);
+
+		myLocationOverlay.runOnFirstFix(new Runnable() {
+			public void run() {
+				mapView.getController().animateTo(
+						myLocationOverlay.getMyLocation());
+			}
+		});
+
+		Drawable drawable = this.getResources().getDrawable(R.drawable.add_spot);
+		itemizedoverlay = new FelixOverlay(this, drawable);
 		createMarker();
 	}
 
@@ -86,18 +91,25 @@ public class FelixMapActivity extends MapActivity {
 	}
 
 	private void createMarker() {
-		GeoPoint p = new GeoPoint(34, -118);
+		GeoPoint p = mapView.getMapCenter();
 		OverlayItem overlayitem = new OverlayItem(p, "", "");
 		itemizedoverlay.addOverlay(overlayitem);
-		mapView.getOverlays().add(itemizedoverlay);
+		if (itemizedoverlay.size() > 0) {
+			mapView.getOverlays().add(itemizedoverlay);
+		}
 	}
-	
-	/* Methods to Create */
-	public void showAllSpots () {
-		// TODO: Show all spots
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		myLocationOverlay.enableMyLocation();
+		myLocationOverlay.enableCompass();
 	}
-	
-	public void viewSpot () {
-		// TODO: Create a spot somewhere
+
+	@Override
+	protected void onPause() {
+		super.onResume();
+		myLocationOverlay.disableMyLocation();
+		myLocationOverlay.disableCompass();
 	}
 }
