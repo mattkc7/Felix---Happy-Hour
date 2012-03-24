@@ -24,12 +24,11 @@ import com.google.android.maps.OverlayItem;
  */
 public class FelixMapActivity extends MapActivity {
 	
-	private MapController mapController;
 	private MapView mapView;
-	private LocationManager locationManager;
 	private FelixOverlay itemizedoverlay;
+	private MapController mapController;
+	private LocationManager locationManager;
 	private MyLocationOverlay myLocationOverlay;
-	//private GeoPoint homebase = new GeoPoint(34, -118);
 	
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
@@ -38,9 +37,14 @@ public class FelixMapActivity extends MapActivity {
 		// Configure the Map
 		mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
+		
+		Drawable drawable = this.getResources().getDrawable(R.drawable.add_spot);
+		itemizedoverlay = new FelixOverlay(drawable, this);
+		
 		mapView.setSatellite(true);
 		mapController = mapView.getController();
-		mapController.setZoom(14); // Zoon 1 is world view
+		mapController.setZoom(14); 
+		
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
 				0, new GeoUpdateHandler());
@@ -54,10 +58,6 @@ public class FelixMapActivity extends MapActivity {
 						myLocationOverlay.getMyLocation());
 			}
 		});
-
-		Drawable drawable = this.getResources().getDrawable(R.drawable.add_spot);
-		itemizedoverlay = new FelixOverlay(this, drawable);
-		createMarker();
 	}
 
 	@Override
@@ -72,9 +72,8 @@ public class FelixMapActivity extends MapActivity {
 			int lat = (int) (location.getLatitude() * 1E6);
 			int lng = (int) (location.getLongitude() * 1E6);
 			GeoPoint point = new GeoPoint(lat, lng);
-			createMarker();
-			mapController.animateTo(point); // mapController.setCenter(point);
-
+			createMarker(point, "Test", "Test2");
+			mapController.animateTo(point);
 		}
 
 		@Override
@@ -90,9 +89,8 @@ public class FelixMapActivity extends MapActivity {
 		}
 	}
 
-	private void createMarker() {
-		GeoPoint p = mapView.getMapCenter();
-		OverlayItem overlayitem = new OverlayItem(p, "", "");
+	private void createMarker(GeoPoint p, String t1, String t2) {
+		OverlayItem overlayitem = new OverlayItem(p, t1, t2);
 		itemizedoverlay.addOverlay(overlayitem);
 		if (itemizedoverlay.size() > 0) {
 			mapView.getOverlays().add(itemizedoverlay);
